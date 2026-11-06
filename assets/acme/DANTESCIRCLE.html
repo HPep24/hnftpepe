@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Layered Video</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Almendra+SC:wght@700&family=UnifrakturMaguntia&display=swap" rel="stylesheet"><style>body,html{margin:0;padding:0;height:100%;background:#000;overflow:hidden;font-family:'Almendra SC',serif}#viewer{width:626px;height:877px;margin:20px auto;position:relative;background:#000;overflow:hidden;cursor:pointer}video{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;height:100%;object-fit:contain;transition:opacity .3s}#v1{z-index:1}#v2{z-index:0;opacity:0}#enter-overlay{position:absolute;inset:0;pointer-events:all;z-index:10;display:flex;justify-content:center;align-items:flex-start;transition:opacity .4s}#enter-text{margin-top:75vh;transform:translateY(-50%);color:#000;font-family:'Almendra SC',serif;font-size:40px;font-weight:700;text-align:center;letter-spacing:6px;text-shadow:0 0 0 #000,0 0 8px #ff8c00,0 0 16px #ff8c00,0 0 24px #ff8c00,0 0 32px #ff8c00;animation:glow 2.2s ease-in-out infinite alternate;white-space:nowrap}@keyframes glow{0%{text-shadow:0 0 0 #000,0 0 4px #ff8c00,0 0 8px #ff8c00,0 0 12px #ff8c00;opacity:.5}50%{text-shadow:0 0 0 #000,0 0 12px #ff8c00,0 0 24px #ff8c00,0 0 40px #ff8c00,0 0 60px #ff8c00;opacity:1}100%{text-shadow:0 0 0 #000,0 0 4px #ff8c00,0 0 8px #ff8c00,0 0 12px #ff8c00;opacity:.5}}@media (max-height:600px){#enter-text{margin-top:70vh;font-size:42px}}</style></head><body><div id="viewer"><div id="enter-overlay"><div id="enter-text">ENTER</div></div><video id="v1" autoplay loop playsinline muted><source src="https://zxk4qiv3muqez7afgjr3ffktx76wz7eevp7kpzdsamo3zie3nita.arweave.net/zdXIIrtlIEz8BTJjspVTv_1s_ISr_qfkcgMdvKCbaiY" type="video/mp4"></video><video id="v2" playsinline muted><source src="https://7y3kuy6e3d5bhhe4rfzfvhr5jhmxr4go36xu4s2xg7ob4nwflonq.arweave.net/_jaqY8TY-hOcnIlyWp49Sdl48M7fr05LVzfcHjbFW5s" type="video/mp4"></video></div><script>const viewer=document.getElementById('viewer'),
+      enter=document.getElementById('enter-overlay'),
+      v1=document.getElementById('v1'),
+      v2=document.getElementById('v2');
+
+let active=1, interacted=false;
+
+function show1(sound=false){
+  v2.pause();v2.currentTime=0;v2.muted=true;v2.style.opacity='0';
+  v1.currentTime=0;v1.muted=!sound;v1.play().catch(()=>v1.muted=true&&v1.play());
+  v1.style.opacity='1';
+  active=1;
+  enter.style.pointerEvents='all';enter.style.opacity='1';
+}
+
+function show2(){
+  v1.pause();v1.muted=true;v1.style.opacity='0';
+  v2.currentTime=0;v2.muted=false;v2.play().catch(()=>v2.muted=true&&v2.play());
+  v2.style.opacity='1';
+  active=0;
+  enter.style.pointerEvents='none';enter.style.opacity='0';
+}
+
+show1(false);
+
+viewer.onclick=()=>{
+  if(!interacted){interacted=true;show2();return}
+  active?show2():show1(true);
+};
+
+v2.onended=()=>{if(!active)show1(true)};
+
+document.addEventListener('touchstart',()=>{if(interacted){v1.muted=v2.muted=false}},{passive:true});</script></body></html>

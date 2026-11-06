@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GREYGALAXY</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.card{
+  position:relative;
+  width:400px;
+  height:560px;
+  max-width:100vw;
+  max-height:100vh;
+}
+.card a{display:block;width:100%;height:100%}
+.card img{display:block;width:100%;height:100%;object-fit:contain;cursor:pointer}
+.overlay{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;z-index:10;
+}
+.overlay span{
+  font-family:'Press Start 2P',monospace;
+  font-size:28px;
+  color:#39ff14;
+  text-align:center;
+  text-shadow:
+    0 0 10px #39ff14,
+    0 0 30px #39ff14,
+    0 0 60px #00ff66,
+    0 0 100px #00ff66;
+  animation:flash 3s infinite;
+  line-height:1.6;
+}
+@keyframes flash{
+  0%{opacity:1;text-shadow:0 0 10px #39ff14,0 0 30px #39ff14,0 0 60px #00ff66,0 0 100px #00ff66}
+  50%{opacity:1;text-shadow:0 0 10px #39ff14,0 0 30px #39ff14,0 0 60px #00ff66,0 0 100px #00ff66}
+  60%{opacity:0}
+  100%{opacity:0}
+}
+</style>
+</head>
+<body>
+<div class="card">
+<a href="https://zqvqghprpwdx6tihyl3gxrhwvq6qpwcv3e3lll66x3r3yllmqkma.ar.io/zCsDHfF9h39NB8L2a8T2rD0H2FXZNrWv3r7jvC1sgpg?" target="_blank" rel="noopener">
+<img src="https://guepiypnuhavqd7phwk2j6xs7w6xbyzyc5pcgmmhcon7xqwxijnq.ar.io/NQj0Ye2hwVgP7z2VpPry_b1w4zgXXiMxhxOb-8LXQls?.gif" alt="GREYGALAXY">
+</a>
+<div class="overlay"><span>CLICK CARD<br>TO PLAY</span></div>
+</div>
+</body>
+</html>

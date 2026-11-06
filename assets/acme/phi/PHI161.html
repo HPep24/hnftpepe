@@ -1,0 +1,1312 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PHI 161 — 161 pieces, one rule, forever on Bitcoin</title>
+<meta name="description" content="PHI 161: 161 golden-ratio pieces by HNFT PEPE. One 28,881-byte file on Bitcoin draws every piece — the Euclidean algorithm rendered through sixteen art-history lenses. Minted in order on ACME.">
+<meta name="theme-color" content="#0A0B0D">
+<meta property="og:type" content="website"><meta property="og:title" content="PHI 161"><meta property="og:description" content="161 pieces. One rule. A Fibonacci ratio stops — φ never does. Minted in order on ACME.">
+<!-- Social preview: this is ACME's own thumbnail of the PHI asset. To show a banner instead, host the image, put its full https address in og:image and twitter:image, and change twitter:card to summary_large_image. -->
+<meta property="og:image" content="https://acme.pics/api/assets/PHI/thumbnail">
+<meta name="twitter:card" content="summary"><meta name="twitter:site" content="@HnftPepe"><meta name="twitter:image" content="https://acme.pics/api/assets/PHI/thumbnail">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230A0B0D'/%3E%3Cpath d='M2 2h12v12H2z' fill='none' stroke='%2367A6D4'/%3E%3Cpath d='M2 14A12 12 0 0 1 14 2' fill='none' stroke='%23E7E3D7' stroke-width='1.4'/%3E%3C/svg%3E">
+<style>
+/* nocturne — the collection's own palette. --gold/--green/--red are the original names; --blue/--terra/--slate say what they are.
+   --terra-t is the same terracotta lifted a little, for small text on the card colour (4.9:1 instead of 4.0:1) */
+:root{color-scheme:dark;--bg:#0A0B0D;--bg2:#1B1D23;--bg3:#23262C;--cap:#0E0E0E;--paper:#E7E3D7;--gold:#67A6D4;--green:#D15145;--red:#8FA0B0;
+--blue:var(--gold);--terra:var(--green);--terra-t:#D96A5F;--slate:var(--red);--grey:#8B919B;--grey2:#B4BAC3;--line:#262A32;--line2:#333944;
+--mono:ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;--sans:"Space Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+/* spacing runs on Fibonacci numbers */
+--s1:5px;--s2:8px;--s3:13px;--s4:21px;--s5:34px;--s6:55px;--s7:89px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px;-webkit-text-size-adjust:100%;scrollbar-gutter:stable}
+body{background:var(--bg);color:var(--paper);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:clip}
+body.modal{overflow:hidden}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+::selection{background:var(--blue);color:#061520}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit}
+button:disabled{opacity:.55;cursor:default}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto;padding:0 var(--s4)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:fixed;left:var(--s3);top:-60px;z-index:99;background:var(--blue);color:#061520;font:700 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:var(--s3) var(--s4);border-radius:2px}
+.skip:focus{top:var(--s3)}
+.mono{font-family:var(--mono)}
+.gold{color:var(--blue)}.green{color:var(--terra-t)}.red{color:var(--slate)}.gr{color:var(--grey)}
+.nw{white-space:nowrap}
+.lc{text-transform:none}
+
+/* ── nav ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(10,11,13,.86);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;gap:var(--s4)}
+nav .brand{font-family:var(--mono);font-size:14px;letter-spacing:.28em;font-weight:700;color:var(--paper);white-space:nowrap}
+nav .brand:hover{text-decoration:none}
+/* a full-height target for a thumb */
+nav .brand,nav .count{display:inline-block;line-height:44px}
+nav .brand b{color:var(--blue)}
+nav ul{display:flex;gap:var(--s4);list-style:none;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase}
+nav ul a{color:var(--grey2);white-space:nowrap}
+nav ul a:hover{color:var(--blue);text-decoration:none}
+.nav-r{display:flex;align-items:center;gap:var(--s3)}
+nav .count{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--paper);white-space:nowrap}
+nav .count i{font-style:normal;color:var(--grey)}
+nav .mint{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;background:var(--blue);color:#061520;padding:10px 14px;border-radius:2px;font-weight:700;white-space:nowrap}
+nav .mint:hover{text-decoration:none;background:#7DB6DF}
+.menu-b{display:none;background:none;border:1px solid var(--line2);border-radius:2px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:9px 12px;cursor:pointer}
+@media(max-width:1120px){
+  .menu-b{display:block}
+  nav ul{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--line);padding:var(--s2) 0}
+  nav ul.open{display:flex}
+  nav ul a{display:block;padding:var(--s3) var(--s4);font-size:12.5px}
+}
+
+/* ── hero ── */
+#hero{position:relative;height:100vh;height:100svh;min-height:620px;overflow:hidden;background:#050608;display:flex;flex-direction:column}
+#tunnel{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* a dark core behind the words, not a vignette round the edge: the pieces stay bright where nothing has to be read */
+#hero .veil{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse var(--vw,54%) var(--vh,46%) at 50% var(--cy,47%),rgba(5,6,8,.9) 0%,rgba(5,6,8,.84) 44%,rgba(5,6,8,.46) 72%,rgba(5,6,8,0) 100%),linear-gradient(to top,rgba(5,6,8,.9) 40px,rgba(5,6,8,.55) 84px,rgba(5,6,8,0) 150px)}
+#hero .inner{position:relative;z-index:3;pointer-events:none;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:74px var(--s4) var(--s3)}
+.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--blue);margin-bottom:var(--s4)}
+#hero h1{font-size:clamp(64px,12vw,152px);line-height:.88;letter-spacing:-.02em;font-weight:800}
+#hero h1 em{font-style:normal;color:var(--blue)}
+#hero .tag{font-size:clamp(16px,2vw,22px);color:var(--grey2);margin-top:var(--s4);max-width:34em}
+#hero .tag b{color:var(--paper)}
+#hero .tag .nl{display:block}
+.inner a{pointer-events:auto}
+.btns{display:flex;gap:var(--s3);flex-wrap:wrap;justify-content:center;margin-top:var(--s5)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;padding:0 var(--s4);border-radius:2px;font-weight:700;border:1px solid var(--blue);color:var(--blue);background:none;cursor:pointer;text-align:center}
+.btn:hover{text-decoration:none;background:rgba(103,166,212,.12)}
+.btn.solid{background:var(--blue);color:#061520}
+.btn.solid:hover{background:#7DB6DF}
+.btn.ghost{border-color:var(--line2);color:var(--paper)}
+.btn.ghost:hover{border-color:var(--grey);background:none}
+.hud{position:absolute;top:76px;right:var(--s4);z-index:4;display:flex;gap:var(--s2)}
+.tog{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--grey2);background:rgba(10,11,13,.8);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid var(--line2);padding:9px 12px;border-radius:2px;cursor:pointer}
+.tog:hover{border-color:var(--line2);color:var(--paper)}
+.tog .bars{display:flex;gap:2px;align-items:flex-end;height:13px}
+.tog .bars i{width:2px;background:var(--grey);height:3px;transition:height .1s}
+.tog[aria-pressed="true"]#snd{color:var(--blue);border-color:#2B5674}
+.tog[aria-pressed="true"] .bars i{background:var(--blue)}
+#hero .hint{position:relative;z-index:3;text-align:center;text-shadow:0 0 6px #050608,0 0 14px #050608;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey);padding:0 var(--s4) var(--s3)}
+/* the caption bar every piece carries — here it carries the mint */
+.capbar{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;gap:var(--s4);min-height:40px;padding:0 22px;background:var(--cap);border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;letter-spacing:1.5px;color:#E8E3D6;white-space:pre}
+.capbar:hover{text-decoration:none;background:#14151A}
+.capbar:focus-visible{outline-offset:-3px}
+.capbar span:first-child{overflow:hidden;text-overflow:ellipsis}
+.capbar b{font-weight:400;color:var(--blue)}
+
+/* ── sections ── */
+section{padding:var(--s7) 0;border-top:1px solid var(--line)}
+.sec-k{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--blue);margin-bottom:var(--s4);display:flex;align-items:center;gap:var(--s3)}
+h2{font-size:clamp(30px,4.4vw,54px);line-height:1.05;letter-spacing:-.015em;font-weight:800;max-width:17em;text-wrap:balance}
+.lede{font-size:clamp(17px,1.7vw,20px);color:var(--grey2);margin-top:var(--s4);max-width:39em}
+.lede b,.lede strong{color:var(--paper)}
+.grid{display:grid;gap:var(--s3);margin-top:var(--s5)}
+/* four across, then two, then one: never three and an orphan */
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:1000px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.g3,.g2{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:520px){.g4{grid-template-columns:minmax(0,1fr)}.g4.keep2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:2px;padding:var(--s4)}
+.card .n{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);margin-bottom:var(--s3)}
+.card h3{font-size:21px;font-weight:700;margin-bottom:var(--s2);line-height:1.2}
+.card p{color:var(--grey2);font-size:15.5px}
+.card p+p{margin-top:var(--s3)}
+.card b{color:var(--paper)}
+.tenet{border-left:2px solid var(--blue)}
+.stat{background:var(--bg2);border:1px solid var(--line);border-radius:2px;padding:var(--s4)}
+.stat .v{font-size:clamp(32px,4vw,44px);font-weight:800;line-height:1;letter-spacing:-.02em}
+.stat .v small{font-size:15px;color:var(--grey);font-weight:400;margin-left:6px;letter-spacing:0}
+.stat .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);margin-top:var(--s3);line-height:1.5}
+.note{font-family:var(--mono);font-size:12px;color:var(--grey);line-height:1.9;margin-top:var(--s4);max-width:78ch}
+.note b{color:var(--grey2);font-weight:400}
+.tw{overflow-x:auto;margin-top:var(--s5)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey);text-align:left;padding:var(--s3) 14px;border-bottom:1px solid var(--line);white-space:nowrap;font-weight:400}
+td{padding:var(--s3) 14px;border-bottom:1px solid #1E222A;color:var(--grey2);vertical-align:top}
+td b{color:var(--paper)}
+.cmp tbody th{font-size:15px;letter-spacing:0;text-transform:none;border-bottom:1px solid #1E222A;vertical-align:top}
+
+/* ── pieces: every one is an <img>, so no piece can borrow another's patterns or styles ── */
+.frame{display:block;width:100%;background:var(--cap);border:1px solid var(--line);border-radius:2px;overflow:hidden;padding:0;cursor:pointer;position:relative}
+.frame img{width:100%;height:100%;object-fit:contain}
+.frame.wide{aspect-ratio:10/7}
+.frame:hover{border-color:var(--line2)}
+figure figcaption{font-family:var(--mono);font-size:11.5px;color:var(--grey);letter-spacing:.04em;padding:var(--s3) 2px 0;display:flex;justify-content:space-between;gap:var(--s3);flex-wrap:wrap}
+figure figcaption b{color:var(--blue);font-weight:400}
+/* 24 to a page, so 6, 4 or 2 across always ends on a full row */
+.tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--s3);margin-top:var(--s5)}
+@media(max-width:1000px){.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:620px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{display:block;width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:2px;overflow:hidden;cursor:pointer;padding:0;text-align:left;position:relative}
+.tile:hover{border-color:var(--grey)}
+.tile .ph{display:block;aspect-ratio:1;background:var(--cap)}
+.tile .ph img{width:100%;height:100%;object-fit:contain}
+/* the caption: number and ratio on the left, motion on the right, as on the pieces themselves */
+.tile .c{display:flex;justify-content:space-between;flex-wrap:wrap;gap:0 var(--s2);font-family:var(--mono);font-size:10px;color:var(--grey);padding:var(--s2) 9px;letter-spacing:.06em;white-space:nowrap}
+.tiles.m8{grid-template-columns:repeat(4,minmax(0,1fr))}
+.tile .tg{position:absolute;top:6px;left:6px;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding:3px 6px;border-radius:2px;background:rgba(10,11,13,.86);color:var(--grey2);border:1px solid var(--line2)}
+.tile .tg.nx{background:var(--blue);color:#061520;border-color:var(--blue);font-weight:700}
+
+/* ── the mint band ── */
+#now{border-top:0;padding:var(--s6) 0 var(--s7)}
+.now-grid{display:grid;grid-template-columns:minmax(0,1.618fr) minmax(0,1fr);gap:var(--s6);align-items:center}
+.now-facts h2{font-size:clamp(28px,3.3vw,42px)}
+.now-facts .lede{font-size:17px;margin-top:var(--s3)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--grey);flex:none}
+.dot.on{background:var(--blue);box-shadow:0 0 0 0 rgba(103,166,212,.6);animation:ping 2.4s ease-out infinite}
+.dot.end{background:var(--terra)}
+@keyframes ping{70%,100%{box-shadow:0 0 0 9px rgba(103,166,212,0)}}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:var(--s2) var(--s4);margin-top:var(--s4);font-family:var(--mono);font-size:12.5px}
+.kv dt{color:var(--grey);letter-spacing:.04em}
+.kv dd{color:var(--paper);overflow-wrap:anywhere}
+.price{margin-top:var(--s4);padding-top:var(--s4);border-top:1px solid var(--line);display:flex;align-items:baseline;gap:var(--s3);flex-wrap:wrap}
+.price b{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1;white-space:nowrap}
+.price span{font-family:var(--mono);font-size:11.5px;color:var(--grey);line-height:1.6;flex:1 1 15em}
+.prog{margin-top:var(--s4)}
+.bar{height:5px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--blue);transition:width .6s}
+.prog p{font-family:var(--mono);font-size:11.5px;color:var(--grey2);margin-top:var(--s2);letter-spacing:.04em}
+.now-facts .btns{justify-content:flex-start;margin-top:var(--s4)}
+.fine{font-size:13.5px;color:var(--grey);margin-top:var(--s4);max-width:44em}
+.prog.off,.now-grid.pending .now-art,.now-grid.pending .kv{visibility:hidden}
+.kv small,#v-facts small{display:block;font-size:11px;line-height:1.5;margin-top:3px}
+.fine b{color:var(--grey2);font-weight:400}
+/* an upright piece gets a frame of its own shape, as tall as the screen allows */
+.frame.pt{aspect-ratio:7/10;width:min(100%,calc(min(68vh,640px)*.7));margin-inline:auto}
+@media(max-width:900px){.now-grid{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:var(--s5)}}
+@media(max-width:700px){.now-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* ── compare table ── */
+@media(max-width:700px){
+  .cmp thead{display:none}
+  .cmp tr{display:block;padding:var(--s3) 0;border-bottom:1px solid #1E222A}
+  .cmp td,.cmp tbody th{display:block;border:0;padding:2px 0}
+  .cmp tbody th{margin-bottom:var(--s1);letter-spacing:.14em;text-transform:uppercase;font-size:11px}
+  .cmp td:nth-child(2)::before{content:"1960s · ";font-family:var(--mono);font-size:11px;color:var(--grey)}
+  .cmp td:nth-child(3)::before{content:"now · ";font-family:var(--mono);font-size:11px;color:var(--blue)}
+}
+
+/* ── the ladder ── */
+.lad{margin-top:var(--s5);background:var(--bg2);border:1px solid var(--line);border-radius:2px;padding:var(--s4)}
+.lad-h{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s3) var(--s4);flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--grey);margin-bottom:var(--s4);min-height:2.6em}
+.lad-h #lad-read{color:var(--paper);letter-spacing:.04em}
+.lg{display:flex;gap:var(--s4);flex-wrap:wrap}
+.lg span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.lg i{width:10px;height:10px;border:1px solid var(--line2);border-radius:1px;display:block}
+.lg .lg-m i{background:var(--paper);border-color:var(--paper)}
+.lg .lg-x i{background:var(--blue);border-color:var(--blue)}
+.lr{display:grid;grid-template-columns:8.5ch minmax(0,716px) minmax(224px,1fr);gap:var(--s3);align-items:center;padding:3px 0}
+.lr-r{font-family:var(--mono);font-size:13px;color:var(--blue);white-space:nowrap}
+.lr-r small{display:block;font-size:9.5px;color:var(--grey);letter-spacing:.12em;text-transform:uppercase;line-height:1.1}
+.lr-c{display:grid;grid-template-columns:repeat(24,minmax(0,1fr));gap:4px}
+.lr-c i{display:block;aspect-ratio:1;border:1px solid var(--line2);border-radius:1px;cursor:pointer}
+.lr-c i:hover{border-color:var(--paper)}
+.lr-c i.is-m{background:var(--paper);border-color:var(--paper);opacity:.9}
+.lr-c i.is-x{background:var(--blue);border-color:var(--blue);animation:nx 1.6s ease-in-out infinite alternate}
+@keyframes nx{to{box-shadow:0 0 0 3px rgba(103,166,212,.35)}}
+.lr.ori .lr-r{color:var(--slate)}
+.lr.lim .lr-r{color:var(--terra-t)}
+.lr.lim .lr-c i{border-color:var(--terra)}
+.lr.lim .lr-c i.is-m{background:var(--terra)}
+.lr-m{font-family:var(--mono);font-size:11.5px;color:var(--grey);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:999px){.lr{grid-template-columns:7.5ch minmax(0,1fr)}.lr-m{display:none}}
+@media(max-width:860px){.lr-c{gap:2px}.lad{padding:var(--s3)}.lr-r{font-size:12px}}
+/* phones: twelve to a line, so each square is big enough for a finger */
+@media(max-width:620px){.lr{align-items:start;padding:4px 0}.lr-c{grid-template-columns:repeat(12,minmax(0,1fr));gap:3px}.lr-r{padding-top:2px}}
+@media(max-width:380px){.lr-c{grid-template-columns:repeat(8,minmax(0,1fr))}}
+
+/* ── collection ── */
+.rowf{display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center;margin-top:var(--s5)}
+input,select{background:#000;border:1px solid var(--line2);color:var(--paper);font-family:var(--mono);border-radius:2px}
+#look{font-size:17px;padding:0 var(--s3);height:46px;letter-spacing:.12em;width:132px;text-align:center}
+#look::placeholder{color:#777D88}
+button.go{background:var(--paper);color:var(--bg);border:1px solid var(--paper);font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:0 18px;height:46px;border-radius:2px;cursor:pointer;font-weight:700}
+button.go.g2b{background:transparent;color:var(--paper);border-color:var(--line2)}
+button.go.g2b:hover{border-color:var(--grey)}
+#look-msg{font-size:12.5px;flex:1 1 16em}
+#look-msg.err{color:var(--terra-t)}
+.filters{display:flex;gap:var(--s3) var(--s4);flex-wrap:wrap;align-items:center;margin-top:var(--s4);font-family:var(--mono);font-size:11.5px;color:var(--grey);letter-spacing:.06em}
+.chips{display:flex;gap:var(--s1);flex-wrap:wrap}
+.chip{background:none;border:1px solid var(--line2);border-radius:2px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--grey2);padding:0 11px;height:34px;cursor:pointer;white-space:nowrap}
+.chip:hover{border-color:var(--grey)}
+.chip[aria-pressed="true"]{background:var(--paper);color:var(--bg);border-color:var(--paper)}
+.filters label{display:inline-flex;align-items:center;gap:var(--s2)}
+select{font-size:12px;height:34px;padding:0 var(--s2);letter-spacing:.04em}
+#grid-count{font-size:11.5px;margin-top:var(--s4);letter-spacing:.04em}
+#grid{margin-top:var(--s3)}
+.more{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s4)}
+
+/* ── on Bitcoin ── */
+.cmpbar{margin-top:var(--s3)}
+.cmpbar .row{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s1);margin-top:var(--s3)}
+.cmpbar .lab{font-family:var(--mono);font-size:11.5px;color:var(--grey2);display:flex;justify-content:space-between;gap:var(--s3);flex-wrap:wrap}
+.cmpbar .lab b{color:var(--paper);font-weight:400}
+.scale-bar{height:21px;background:var(--bg3);border:1px solid var(--line);position:relative;border-radius:2px;overflow:hidden}
+.scale-bar i{position:absolute;left:0;top:0;bottom:0;background:var(--blue);min-width:3px}
+.scale-bar.alt i{background:var(--grey)}
+.txs{list-style:none;margin-top:var(--s3)}
+.txs li{display:grid;grid-template-columns:10.5em minmax(0,1fr);gap:2px var(--s4);padding:var(--s3) 0;border-top:1px solid var(--line);font-size:14.5px;color:var(--grey2)}
+.txs li:first-child{border-top:0;padding-top:0}
+.txs .t{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);padding-top:3px}
+.txs code,.hash{font-family:var(--mono);font-size:12px;color:var(--paper);overflow-wrap:anywhere;word-break:break-all;letter-spacing:.02em}
+.txs a code{color:var(--blue)}
+.txs a::after{content:"\00a0↗";font-family:var(--mono);font-size:12px}
+.txs small{display:block;color:var(--grey);font-size:13px;margin-top:2px}
+@media(max-width:600px){.txs li{grid-template-columns:minmax(0,1fr)}}
+.verify{margin-top:var(--s4);padding-top:var(--s4);border-top:1px solid var(--line)}
+.verify .rowf{margin-top:var(--s3)}
+#ver-out{list-style:none;font-family:var(--mono);font-size:12.5px;line-height:1.7;margin-top:var(--s3);color:var(--grey2)}
+#ver-out li{padding-left:1.7em;text-indent:-1.7em;overflow-wrap:anywhere}
+#ver-out .ok{color:#8FD0A0}
+#ver-out .bad{color:var(--terra-t)}
+
+/* ── mint ── */
+.steps{list-style:none;counter-reset:st;margin-top:var(--s5);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s3)}
+@media(max-width:1000px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.steps{grid-template-columns:minmax(0,1fr)}}
+.steps li{counter-increment:st;background:var(--bg2);border:1px solid var(--line);border-radius:2px;padding:var(--s4);color:var(--grey2);font-size:15.5px}
+.steps li::before{content:counter(st);display:block;font-family:var(--mono);font-size:26px;line-height:1;color:var(--blue);margin-bottom:var(--s3)}
+.steps b{color:var(--paper)}
+.live-line{font-family:var(--mono);font-size:13px;color:var(--paper);letter-spacing:.04em;margin-top:var(--s4);display:flex;align-items:baseline;gap:var(--s3)}
+.live-line .dot{position:relative;top:-1px}
+.links{display:flex;gap:var(--s2) var(--s4);flex-wrap:wrap;font-family:var(--mono);font-size:12px;letter-spacing:.06em;margin-top:var(--s4)}
+ul.pl{list-style:none;margin-top:var(--s2)}
+ul.pl li{color:var(--grey2);font-size:15.5px;padding:var(--s2) 0 var(--s2) 1.2em;position:relative}
+ul.pl li::before{content:"";position:absolute;left:0;top:1.05em;width:6px;height:6px;border:1px solid var(--blue)}
+ul.pl b{color:var(--paper)}
+body.over .when-open{display:none}
+
+footer{padding:var(--s6) 0 var(--s7);border-top:1px solid var(--line);color:var(--grey);font-family:var(--mono);font-size:12px;letter-spacing:.06em}
+footer div{overflow-wrap:anywhere}
+footer .l{display:flex;gap:var(--s2) var(--s4);flex-wrap:wrap;margin-top:var(--s4)}
+
+/* ── the viewer ── */
+dialog{margin:auto;width:min(1180px,calc(100% - 32px));max-width:none;max-height:none;padding:0;border:1px solid var(--line2);border-radius:2px;background:var(--bg2);color:var(--paper);overflow:hidden;overscroll-behavior:contain}
+dialog::backdrop{background:rgba(5,6,8,.84)}
+/* browsers from before <dialog>: closed means gone, open means a plain fixed panel */
+dialog:not([open]){display:none}
+dialog.plain{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:90;box-shadow:0 0 0 200vmax rgba(5,6,8,.84)}
+/* a square stage beside the facts: landscape and portrait pieces get the same room, and the controls never move */
+.v-wrap{display:grid;grid-template-columns:minmax(0,1.618fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);height:min(calc(min(1180px,100vw - 32px)*.618),calc(100vh - 34px));height:min(calc(min(1180px,100vw - 32px)*.618),calc(100dvh - 34px))}
+.v-art{background:var(--cap);min-width:0;min-height:0;touch-action:pan-y}
+.v-art img{width:100%;height:100%;object-fit:contain;-webkit-user-select:none;user-select:none}
+.v-side{padding:var(--s4) var(--s4) 0;display:flex;flex-direction:column;gap:var(--s3);min-width:0;min-height:0;overflow:auto;overscroll-behavior:contain}
+.v-side:focus-visible{outline-offset:-2px}
+.v-head{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--s3)}
+.v-head p{font-size:12px;color:var(--blue);letter-spacing:.14em}
+.v-head h2{font-size:30px;margin-top:2px}
+.xb{flex:none;width:44px;height:44px;background:none;border:1px solid var(--line2);border-radius:2px;font-size:22px;line-height:1;cursor:pointer;color:var(--paper)}
+.xb:hover{border-color:var(--grey)}
+#v-state{font-size:14.5px;color:var(--grey2)}
+#v-state b{color:var(--paper)}
+.v-side .btn{width:100%;flex:none}
+#v-facts{font-size:12.5px;font-family:var(--mono)}
+#v-facts td{padding:7px 0;border-bottom:1px solid var(--line)}
+#v-facts td:first-child{color:var(--grey);width:42%;padding-right:var(--s3)}
+#v-facts td:last-child{color:var(--paper)}
+/* previous / next: always at the bottom edge, in reach */
+.v-nav{display:flex;gap:var(--s2);margin-top:auto;position:sticky;bottom:0;background:var(--bg2);padding:var(--s3) 0 var(--s4)}
+.v-nav button{flex:1}
+/* a phone on its side: keep everything, just tighter */
+@media(max-height:520px){.v-side{padding:var(--s3) var(--s3) 0;gap:var(--s2)}.v-head h2{font-size:22px}.xb{width:38px;height:38px;font-size:19px}.v-side .btn{min-height:38px}.v-nav{padding:var(--s2) 0 var(--s3)}.v-nav button{height:38px}#v-state{font-size:13.5px}#v-facts td{padding:5px 0}}
+/* upright phones and tablets: the piece on top, the facts scrolling under it */
+@media(max-width:860px) and (orientation:portrait),(max-width:560px){
+  dialog{width:100%;height:100vh;height:100dvh;border:0;border-radius:0;overflow:auto}
+  dialog.plain{left:0;top:0;transform:none}
+  .v-wrap{display:block;height:auto}
+  .v-art{height:min(50vh,72vw)}
+  .v-art.pt{height:min(60vh,140vw)}
+  .v-side{overflow:visible}
+  .xb{position:fixed;top:10px;right:10px;z-index:2;background:rgba(10,11,13,.82);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+}
+
+@media(max-width:760px){
+  .wrap{padding:0 16px}
+  section{padding:var(--s6) 0}
+  #now{padding:var(--s5) 0 var(--s6)}
+  th,td{padding:10px 8px}
+  td{font-size:14px}
+  .lede{font-size:16.5px}
+  nav .wrap{height:56px;gap:var(--s3)}
+  html{scroll-padding-top:68px}
+  .hud{top:68px;right:16px}
+  #hero .inner{padding-top:112px}   /* the words start below the two toggles */
+  .capbar{padding:0 16px;font-size:10.5px;letter-spacing:1px;gap:var(--s3)}
+  #hero .hint{display:none}
+  .tiles.m8{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #hero h1{font-size:clamp(64px,19vw,96px)}
+  .tog{padding:8px 9px;letter-spacing:.12em}
+}
+@media(max-width:560px){.capbar .w{display:none}}
+@media(max-width:520px){nav .count i{display:none}.nav-r{gap:var(--s2)}}
+@media(max-width:420px){
+  .card,.stat,.steps li{padding:var(--s3) 14px}
+  nav .brand{letter-spacing:.2em;font-size:13px}
+  nav .mint{padding:10px 11px}
+  .kicker{letter-spacing:.2em;font-size:10.5px}
+}
+@media(pointer:coarse){select{font-size:16px;height:40px}.chip{height:40px}}
+/* a phone held sideways: the hero has to fit a very short screen */
+@media(max-height:480px){#hero{min-height:330px}#hero .inner{padding-top:66px}.kicker{display:none}#hero h1{font-size:clamp(44px,15vh,64px)}#hero .tag{margin-top:var(--s2);font-size:15px}.btns{margin-top:var(--s3)}#hero .hint{display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.dot.on,.lr-c i.is-x{animation:none}.bar i{transition:none}}
+body.still .dot.on,body.still .lr-c i.is-x{animation:none}
+</style></head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+
+<nav aria-label="Sections"><div class="wrap">
+  <a class="brand" href="#top" aria-label="PHI 161, top of page"><b>PHI</b> 161</a>
+  <ul id="nav-links">
+    <li><a href="#compressionism">Compressionism</a></li>
+    <li><a href="#system">The system</a></li>
+    <li><a href="#ladder">The ladder</a></li>
+    <li><a href="#motion">Motion</a></li>
+    <li><a href="#collection">All 161</a></li>
+    <li><a href="#chain">On Bitcoin</a></li>
+    <li><a href="#mint" id="nav-how">How to mint</a></li>
+  </ul>
+  <div class="nav-r">
+    <a class="count" id="nav-count" href="#now" hidden></a>
+    <a class="mint" id="nav-mint" href="https://acme.pics/dex/nft/editions/PHI" target="_blank" rel="noopener">Mint<span class="sr"> on ACME, opens in a new tab</span> <span aria-hidden="true">↗</span></a>
+    <button class="menu-b" id="menu-b" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+  </div>
+</div></nav>
+
+<!-- ══════════ HERO ══════════ -->
+<header id="hero">
+  <canvas id="tunnel" aria-hidden="true"></canvas>
+  <div class="veil" aria-hidden="true"></div>
+  <div class="hud">
+    <button class="tog" id="mot" type="button" aria-pressed="true">Motion <span id="mot-s" aria-hidden="true">on</span></button>
+    <button class="tog" id="snd" type="button" aria-pressed="false" title="Generated in the page. No audio files."><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span id="sndlabel">Sound <span id="snd-s" aria-hidden="true">off</span></span></button>
+  </div>
+  <div class="inner">
+    <p class="kicker">161 pieces · a Compressionist collection · on Bitcoin</p>
+    <h1>PHI <em>161</em></h1>
+    <p class="tag">The golden ratio, drawn as the algorithm that finds it. <b class="nl">A Fibonacci ratio stops. φ never does.</b></p>
+    <div class="btns">
+      <a class="btn solid" id="hero-cta" href="https://acme.pics/dex/nft/editions/PHI" target="_blank" rel="noopener">Mint on ACME&nbsp;↗</a>
+      <a class="btn" id="hero-next" href="#now">See what's next</a>
+      <a class="btn ghost" href="https://x.com/HnftPepe" target="_blank" rel="noopener">@HnftPepe</a>
+    </div>
+  </div>
+  <p class="hint" id="hint" aria-hidden="true">every rectangle is a piece from the collection · hold to reverse · move to steer</p>
+  <a class="capbar" id="capbar" href="#now"><span id="cap-l">[1;1,1,1,…]  ·  φ<span class="w">  ·  minted in order, 001 to 161</span></span><span id="cap-r">minting on ACME</span></a>
+</header>
+
+<main id="main">
+
+<!-- ══════════ THE MINT, LIVE ══════════ -->
+<section id="now" aria-labelledby="now-h"><div class="wrap">
+  <div class="now-grid">
+    <figure class="now-art">
+      <button class="frame wide" id="now-frame" type="button"><img id="now-img" alt="" width="1000" height="700"></button>
+    </figure>
+    <div class="now-facts">
+      <p class="sec-k"><span class="dot" id="now-dot"></span><span id="now-k">Minting on ACME</span></p>
+      <h2 id="now-h">Minted in order, 001 to 161.</h2>
+      <p class="lede" id="now-lede">Every mint creates the next piece in the collection. The first was 1/1. The last will be φ.</p>
+      <dl class="kv" id="now-kv"></dl>
+      <div class="price"><b id="now-price">16,180 sats</b><span>to mint, plus ACME's <span class="nw">888-sat</span> fee and the Bitcoin network fee</span></div>
+      <div class="prog off" id="now-prog"><div class="bar"><i id="now-bar"></i></div><p id="now-count"></p></div>
+      <div class="btns">
+        <a class="btn solid" id="now-cta" href="https://acme.pics/dex/nft/editions/PHI" target="_blank" rel="noopener">Mint on ACME&nbsp;↗</a>
+        <a class="btn ghost" href="#collection">Browse all 161</a>
+      </div>
+      <p class="fine" id="now-fine">Mints confirm in Bitcoin's order, not click order. If another mint confirms before yours, you receive the piece after it.</p>
+    </div>
+  </div>
+  <noscript><p class="note">This page draws its pictures with JavaScript. The mint itself is at <a href="https://acme.pics/dex/nft/editions/PHI">acme.pics/dex/nft/editions/PHI</a>.</p></noscript>
+</div></section>
+
+<!-- ══════════ COMPRESSIONISM ══════════ -->
+<section id="compressionism"><div class="wrap">
+  <p class="sec-k">Compressionism · the style</p>
+  <h2>Beauty is what survives the cut.</h2>
+  <p class="lede">Minimalism rose in early-1960s New York as a refusal of Abstract Expressionism: <b>serial geometry, factory materials, and art that simply occupied space.</b> Compressionism recasts that ethic as an emerging digital art style — treating reduction as craft, constraint as catalyst, and beauty as what survives the cut.</p>
+  <p class="lede">The material is bytes, not steel or fluorescent tubes; the site is <b>Bitcoin</b>, not a gallery floor. SVG vectors fit the lineage — infinite scale without quality loss, small enough that every unit earns its place. PHI 161 takes the idea to its limit: the subject <em>is</em> a ratio, the method <em>is</em> an algorithm, and the whole collection — all 161 pieces — is <b>one file of 28,881 bytes</b>.</p>
+  <div class="grid g4">
+    <div class="card tenet"><div class="n">Tenet 01</div><h3>Reduction as craft.</h3><p>Not shrinking a picture — deciding what the object can live without, until everything left is load-bearing. A PHI piece is squares, one spiral, one caption. Nothing else.</p></div>
+    <div class="card tenet"><div class="n">Tenet 02</div><h3>Constraint as catalyst.</h3><p>Bitcoin gives the whole world a few megabytes every ten minutes. Anything that wants to live there forever has to earn every byte.</p></div>
+    <div class="card tenet"><div class="n">Tenet 03</div><h3>Beauty is what survives the cut.</h3><p>Serial geometry, no ornament. What remains after the cut is the work — and only the work.</p></div>
+    <div class="card tenet"><div class="n">Tenet 04</div><h3>Objecthood on Bitcoin.</h3><p>The art is not a link to a file somewhere else. The program that draws every piece is a fragment of Bitcoin: bytes that every node keeping the full chain carries, for as long as Bitcoin runs.</p></div>
+  </div>
+  <div class="tw"><table class="cmp">
+    <thead><tr><th></th><th>Minimalism · New York, 1960s</th><th>Compressionism · Bitcoin, now</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">material</th><td>steel, plexiglass, fluorescent tubes</td><td><b>bytes — one program that draws SVG</b></td></tr>
+      <tr><th scope="row">site</th><td>the gallery floor</td><td><b>Bitcoin</b> — a ledger kept by thousands of independent nodes</td></tr>
+      <tr><th scope="row">method</th><td>serial geometry, fabricated to spec</td><td>serial geometry, generated from one rule: <b>161 objects, one engine</b></td></tr>
+      <tr><th scope="row">subject</th><td>the object itself, nothing referred to</td><td><b>a number</b> — and the algorithm that fails to pin it down</td></tr>
+      <tr><th scope="row">permanence</th><td>as long as the institution keeps it</td><td>the bytes cannot change once confirmed; they last as long as Bitcoin does</td></tr>
+    </tbody>
+  </table></div>
+</div></section>
+
+<!-- ══════════ THE SYSTEM ══════════ -->
+<section id="system"><div class="wrap">
+  <p class="sec-k">The system · one rule</p>
+  <h2>One rule. Sixteen lenses.</h2>
+  <p class="lede">Every piece is <b>the Euclidean algorithm drawn</b>. Take a rectangle. Cut off the largest square that fits. Repeat on what is left, turning a quarter each time. A quarter-circle arc through every square draws the spiral.</p>
+  <p class="lede">The number of squares is not a style choice — it is <b>the sum of the terms in the ratio's continued fraction</b>. 3/2 is [1;2]: three squares. 34/21 is [1;1,1,1,1,1,2]: eight. φ is [1;1,1,1,…]: the sum never ends, so the cutting never stops.</p>
+  <div class="grid g2" id="sys-demo"></div>
+  <div class="grid g3" style="margin-top:var(--s3)">
+    <div class="card"><div class="n">Fixed on every piece</div><p>Spiral-following subdivision (left → bottom → right → top). Quarter-arc spiral at stroke 4. Keylines at 1.6. A 40-unit caption bar carrying the continued fraction, the ratio, the tier and the index — the same bar on all 161.</p></div>
+    <div class="card"><div class="n">Variable per piece</div><p>Rung — which ratio, and so how many squares. Orientation — four rotations and a mirror. A lens for every square, drawn from sixteen. One of eight palette families. One of eight animations; the three Origins hold still.</p></div>
+    <div class="card"><div class="n">Sixteen lenses</div><p class="mono" style="font-size:13px;line-height:2">Euclid&nbsp;· Renaissance&nbsp;· Bauhaus&nbsp;· De&nbsp;Stijl&nbsp;· Cubist&nbsp;· Op&nbsp;Art&nbsp;· Halftone&nbsp;· Minimal&nbsp;· Constructivist&nbsp;· Suprematist&nbsp;· Art&nbsp;Deco&nbsp;· <span class="gold">Girih</span>&nbsp;· Ukiyo-e&nbsp;· Pop&nbsp;· Brutalist&nbsp;· Blueprint</p><p>Girih is built on the pentagram, whose diagonal divides in the golden ratio.</p></div>
+  </div>
+</div></section>
+
+<!-- ══════════ THE LADDER ══════════ -->
+<section id="ladder"><div class="wrap">
+  <p class="sec-k">The ladder · rarity</p>
+  <h2>A Fibonacci ratio stops. φ never does.</h2>
+  <p class="lede">φ is the <b>most irrational number</b> — its continued fraction is all ones, forever, which makes it the hardest number in existence to approximate with a fraction. Every Fibonacci ratio is a failed attempt. PHI 161 collects those failures and measures how far each one misses.</p>
+  <p class="lede"><b>Rarity inverts deviation from φ.</b> The crudest ratios are the rarest pieces: 1/1, 2/1 and 3/2 exist once each. φ exists once.</p>
+  <p class="lede"><b>The mint climbs the same ladder.</b> Pieces are minted in order — the three Origins, the thirteen Plates, then the Descents rung by rung — and the 161st mint is φ itself.</p>
+  <div class="grid g4 keep2">
+    <div class="stat"><div class="v red">3</div><div class="k">Origin · <span class="nw">rungs 1–3</span></div></div>
+    <div class="stat"><div class="v gold">13</div><div class="k">Plate · one- and two-lens studies</div></div>
+    <div class="stat"><div class="v">144</div><div class="k">Descent · <span class="nw">rungs 5–12</span></div></div>
+    <div class="stat"><div class="v green">1</div><div class="k">The Limit · <span class="lc">φ</span></div></div>
+  </div>
+  <p class="note" style="margin-top:var(--s3)">144 + 13 + 3 + 1 = 161. Every tier size is a Fibonacci number: 144, 13, 3, 1.</p>
+  <div class="lad">
+    <div class="lad-h"><span id="lad-read">One square per piece, in mint order. Pick one to open it.</span><span class="lg" id="lad-lg" hidden><span class="lg-m"><i></i>minted</span><span class="lg-x" hidden><i></i>next</span><span><i></i>to come</span></span></div>
+    <div id="ladder-map" role="group" aria-label="The ladder: 161 pieces in mint order, grouped by ratio."></div>
+  </div>
+</div></section>
+
+<!-- ══════════ MOTION ══════════ -->
+<section id="motion"><div class="wrap">
+  <p class="sec-k">Motion · eight ways</p>
+  <h2>158 of 161 move.</h2>
+  <p class="lede">The motion is <b>SMIL and CSS only</b>. Script composes each drawing once; after that nothing is driving it — the animation is declared in the SVG itself. The pieces below are running live in this page, drawn by the same engine that is on Bitcoin.</p>
+  <div class="tiles m8" id="motion-tiles"></div>
+  <div class="tw"><table>
+    <thead><tr><th>animation</th><th>what it does</th><th>pieces</th></tr></thead>
+    <tbody>
+      <tr><td class="mono gold">draw</td><td>the spiral writes itself along its own measured length</td><td class="mono">31</td></tr>
+      <tr><td class="mono gold">breathe</td><td>every square pulses on its own clock — 4 s plus half a second per square</td><td class="mono">31</td></tr>
+      <tr><td class="mono gold">hue</td><td>the entire palette rotates through 360° over thirty seconds; on the two mono pieces it barely shows</td><td class="mono">26</td></tr>
+      <tr><td class="mono gold">morph</td><td>each square crossfades into the next lens in its sequence</td><td class="mono">23</td></tr>
+      <tr><td class="mono gold">orbit</td><td>a marker rides the spiral from the outer square in to the eye</td><td class="mono">19</td></tr>
+      <tr><td class="mono gold">reveal</td><td>squares arrive in subdivision order, then leave</td><td class="mono">16</td></tr>
+      <tr><td class="mono gold">drift</td><td>Op Art stripes slide and halftone dots pulse</td><td class="mono">11</td></tr>
+      <tr><td class="mono gold">zoom</td><td>scales by φ and rotates 90°, so the squares and the spiral land on themselves</td><td class="mono green">1 — The Limit</td></tr>
+      <tr><td class="mono gr">none</td><td>the three Origins hold still</td><td class="mono">3</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note"><b>Only</b> φ can loop this way: its squares and its spiral land on themselves. Any Fibonacci rung would show its terminal square arrive at the eye and stop — the animation is a proof, not a decoration.</p>
+</div></section>
+
+<!-- ══════════ THE COLLECTION ══════════ -->
+<section id="collection"><div class="wrap">
+  <span id="find"></span>
+  <p class="sec-k">All 161 · drawn live</p>
+  <h2>This page has no image database.</h2>
+  <p class="lede">Every picture here is drawn on the spot by the same engine that sits in the Bitcoin transaction — <b>nothing is downloaded</b>. Type a piece number from 1 to 161, or an asset name like PHI.042, and the page re-derives it: the lenses composed, the caption computed, the animation running.</p>
+  <form class="rowf" id="finder" novalidate>
+    <label class="sr" for="look">Piece number or asset name</label>
+    <input id="look" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="8" placeholder="161">
+    <button class="go" id="go" type="submit">Summon</button>
+    <button class="go g2b" id="rand" type="button">Random</button>
+    <span class="mono gr" id="look-msg" role="status">try 161 · the only infinite one</span>
+  </form>
+  <div class="filters" role="group" aria-label="Filter the collection">
+    <div class="chips" id="f-tier"></div>
+    <label>motion <select id="f-anim" autocomplete="off"><option value="all">any</option></select></label>
+    <label>palette <select id="f-pal" autocomplete="off"><option value="all">any</option></select></label>
+    <label id="f-st-l" hidden>mint <select id="f-st" autocomplete="off"><option value="all">any</option><option value="todo">still to mint</option><option value="done">minted</option></select></label>
+  </div>
+  <p class="mono gr" id="grid-count" role="status"></p>
+  <div class="tiles" id="grid"></div>
+  <div class="more"><button class="go g2b" id="more" type="button">Show 24 more</button><button class="go g2b" id="all" type="button">Show all</button></div>
+</div></section>
+
+<!-- ══════════ ON BITCOIN ══════════ -->
+<section id="chain"><div class="wrap">
+  <p class="sec-k">On Bitcoin · the technical route</p>
+  <h2>One file. 28,881 bytes. All 161 pieces.</h2>
+  <p class="lede">The collection is not 161 files. It is <b>one program</b> — the engine and the plan for every piece — written into the witness of a single Bitcoin transaction. There are no images in it. Each piece exists as the instruction to draw it.</p>
+  <p class="lede">Every mint creates a numbered asset, PHI.000 to PHI.160, that points back to that one file. When a piece is shown, the file reads which asset it is being shown as and draws that piece — <b>the same squares, the same lenses, the same motion, every time</b>.</p>
+  <div class="grid g4 keep2">
+    <div class="stat"><div class="v">28,881<small>B</small></div><div class="k">the whole collection, stored once</div></div>
+    <div class="stat"><div class="v">1.71<small>MB</small></div><div class="k">what it draws · 161 SVGs, 158 animated</div></div>
+    <div class="stat"><div class="v gold">59×</div><div class="k">bytes drawn per byte stored</div></div>
+    <div class="stat"><div class="v">0.75<small>%</small></div><div class="k">of one Bitcoin block</div></div>
+  </div>
+  <div class="card" style="margin-top:var(--s3)">
+    <div class="n">Against one Bitcoin block</div>
+    <div class="cmpbar">
+      <div class="row"><div class="lab"><span>what is stored · one transaction of 29,804 weight units</span><b>0.75%</b></div><div class="scale-bar"><i style="width:.75%"></i></div></div>
+      <div class="row"><div class="lab"><span>the same 161 pieces as separate SVG files · 1,706,222 bytes</span><b>about 43%</b></div><div class="scale-bar alt"><i style="width:42.7%"></i></div></div>
+    </div>
+    <p style="margin-top:var(--s3)">A block holds 4,000,000 weight units, shared by everyone on earth, one every ten minutes. Drawn out, the pieces run from 1,192 bytes (piece 001) to 27,690 (piece 005).</p>
+  </div>
+
+  <div class="card" style="margin-top:var(--s3)">
+    <div class="n">Check it yourself</div>
+    <ul class="txs">
+      <li><span class="t">Asset created</span><span><a href="https://mempool.space/tx/2e715d87a2d984baa6dff69492fa19b76d83afb961a605b8e53ab67c3660e4ef" target="_blank" rel="noopener"><code>2e715d87a2d984baa6dff69492fa19b76d83afb961a605b8e53ab67c3660e4ef</code></a><small>Block 969,501. Creates the asset PHI and commits to the file's hash.</small></span></li>
+      <li><span class="t">File written</span><span><a href="https://mempool.space/tx/b4dde092ff7f28e552c6f8a5e0a27c9ef1c3c90e32cb021919b4c72fc570216d" target="_blank" rel="noopener"><code>b4dde092ff7f28e552c6f8a5e0a27c9ef1c3c90e32cb021919b4c72fc570216d</code></a><small>Block 969,502. Carries the 28,881 bytes in its witness.</small></span></li>
+      <li><span class="t">Mint opened</span><span><a href="https://mempool.space/tx/030077e4513bd92d0df900ffa91829b2fe98dbe54e5959f03ce9fc1772350600" target="_blank" rel="noopener"><code>030077e4513bd92d0df900ffa91829b2fe98dbe54e5959f03ce9fc1772350600</code></a><small>Block 969,507. 161 pieces, 16,180 sats each, one per transaction.</small></span></li>
+      <li><span class="t">SHA-256 of the file</span><span><span class="hash" id="sha">127d2ea4a0a95fa605c013fb6af278ab28840964c0690c68c2e81df5d045963d</span></span></li>
+    </ul>
+    <div class="verify">
+      <p>The button below fetches the “File written” transaction from mempool.space, lifts the file out of its witness and hashes it in your browser. Then it hashes what ACME is serving, and compares the engine inside the file with the one running this page.</p>
+      <div class="rowf"><button class="go" id="ver" type="button">Check against Bitcoin</button></div>
+      <ul id="ver-out" role="status" aria-live="polite"></ul>
+      <p class="fine">By hand: pull that transaction's witness from any Bitcoin node, save the HTML inside it and hash it. Open the saved file with <span class="mono nw">?asset=PHI.042</span> on the end of its address and it draws piece 043 — offline, with no server at all.</p>
+    </div>
+  </div>
+
+  <div class="grid g3">
+    <div class="card"><div class="n">No takedown</div><p>There is no image server to unplug. The file is part of block 969,502, and every Bitcoin node that keeps full history keeps a copy.</p></div>
+    <div class="card"><div class="n">No silent edit</div><p>A confirmed transaction cannot be rewritten. On ACME the issuer of an asset can point it at a new file, but only with another public transaction — so the hash above, and the check, tell anyone whether a marketplace is still showing this one.</p></div>
+    <div class="card"><div class="n">No expiry</div><p>The file needs no server of its own and no domain to renew. Opened anywhere, it asks acme.pics for a 4 KB shared runtime that is also stored on Bitcoin; if that does not answer, it reads its own asset name and draws the piece anyway.</p></div>
+  </div>
+</div></section>
+
+<!-- ══════════ MINT ══════════ -->
+<section id="mint"><div class="wrap">
+  <p class="sec-k" id="mint-k">Mint · live on ACME</p>
+  <h2>161 pieces. Then the cut is final.</h2>
+  <p class="lede">The plan inside the file has 161 entries and the mint is capped at 161. One rule generated them; there is no 162nd to draw.</p>
+  <p class="live-line"><span class="dot" id="mint-dot"></span><span id="mint-line">Minted in order, 001 to 161 · 16,180 sats each</span></p>
+  <div class="btns" style="justify-content:flex-start;margin-top:var(--s4)">
+    <a class="btn solid" id="mint-cta" href="https://acme.pics/dex/nft/editions/PHI" target="_blank" rel="noopener">Mint on ACME&nbsp;↗</a>
+    <a class="btn ghost" id="mint-file" href="https://acme.pics/asset/PHI" target="_blank" rel="noopener">The collection file on ACME&nbsp;↗</a>
+  </div>
+  <div class="when-open">
+  <ol class="steps">
+    <li><b>Open the mint.</b> It lives at <a href="https://acme.pics/dex/nft/editions/PHI" target="_blank" rel="noopener">acme.pics/dex/nft/editions/PHI</a>. ACME is a protocol and marketplace for art stored on Bitcoin.</li>
+    <li><b>Connect a Bitcoin wallet.</b> ACME works with ACME Wallet, UniSat and Xverse.</li>
+    <li><b>Press Mint Edition and sign.</b> One piece per transaction. There is no limit per wallet.</li>
+    <li><b>Wait for a confirmation.</b> The piece lands in your wallet and gets its own page, like <a href="https://acme.pics/asset/PHI.005" target="_blank" rel="noopener">acme.pics/asset/PHI.005</a>.</li>
+  </ol>
+  <div class="grid g3">
+    <div class="card"><div class="n">What it costs</div><p><b>16,180 sats</b> to the artist — <span class="nw">φ × 10,000</span>, rounded down. On top come ACME's <span class="nw">888-sat</span> protocol fee and the Bitcoin network fee for one small transaction.</p></div>
+    <div class="card"><div class="n">What you get</div><p><b>The next piece in line</b>, never a random one. Asset names count from zero, so they sit one below the piece number: PHI.000 is piece 001 and PHI.160 is piece 161.</p></div>
+    <div class="card"><div class="n">In what order</div><p class="mono nw" style="font-size:13px;line-height:1.9">PHI.000–002 · <span class="red">Origins</span><br>PHI.003–015 · <span class="gold">Plates</span><br>PHI.016–159 · Descents<br>PHI.160 · <span class="green">The Limit</span></p></div>
+  </div>
+  <ul class="pl" style="margin-top:var(--s4)">
+    <li><b>Bitcoin decides the order, not the click.</b> If another mint confirms before yours, you receive the piece after it.</li>
+    <li><b>The Limit is the last mint.</b> φ is reached only at the end.</li>
+    <li><b>After the 161st mint there is nothing left to mint.</b> Check the count on ACME before you sign.</li>
+  </ul>
+  </div>
+  <p class="note">artist: <a href="https://x.com/HnftPepe" target="_blank" rel="noopener"><b>HNFT PEPE</b></a> · 161 pieces · one on-chain file · on Bitcoin</p>
+</div></section>
+
+</main>
+
+<footer><div class="wrap">
+  <div>PHI 161 · a Compressionist collection by <a href="https://x.com/HnftPepe" target="_blank" rel="noopener">HNFT PEPE</a></div>
+  <div style="margin-top:var(--s2)">φ = 1.6180339887498948482045868343656381177203091798057628621354486227…</div>
+  <div class="l"><a href="#top">Top</a><a href="#now" id="foot-now">Next in line</a><a href="#collection">All 161</a><a href="#chain">On Bitcoin</a><a id="foot-mint" href="https://acme.pics/dex/nft/editions/PHI" target="_blank" rel="noopener">Mint on ACME&nbsp;↗</a><a href="https://acme.pics/asset/PHI" target="_blank" rel="noopener">PHI on ACME&nbsp;↗</a><a href="https://acme.pics/asset/HNFTPEPE" target="_blank" rel="noopener">HNFT PEPE on ACME&nbsp;↗</a><a href="https://x.com/HnftPepe" target="_blank" rel="noopener">@HnftPepe</a></div>
+  <div style="margin-top:var(--s4)">Chain facts on this page were checked at Bitcoin block 969,621.</div>
+</div></footer>
+
+<!-- ══════════ ONE PIECE, UP CLOSE ══════════ -->
+<dialog id="viewer" aria-labelledby="v-title">
+  <div class="v-wrap">
+    <div class="v-art"><img id="v-img" alt="" width="1000" height="700" draggable="false"></div>
+    <div class="v-side">
+      <div class="v-head">
+        <div aria-live="polite" aria-atomic="true"><p class="mono" id="v-asset"></p><h2 id="v-title"></h2></div>
+        <button class="xb" id="v-close" type="button" aria-label="Close" autofocus>×</button>
+      </div>
+      <p id="v-state"></p>
+      <a class="btn solid" id="v-cta" href="https://acme.pics/dex/nft/editions/PHI" target="_blank" rel="noopener"></a>
+      <table id="v-facts"><tbody></tbody></table>
+      <div class="v-nav"><button class="go g2b" id="v-prev" type="button"></button><button class="go g2b" id="v-next" type="button"></button></div>
+    </div>
+  </div>
+</dialog>
+
+<script id="engine">
+var PHI=(1+Math.sqrt(5))/2,FIB=[1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987];
+function rungRatio(n){return FIB[n]/FIB[n-1]}
+function cfString(n){if(n===1)return"[1]";if(n===2)return"[2]";var a=[];for(var i=0;i<n-3;i++)a.push("1");a.push("2");return"[1;"+a.join(",")+"]"}
+function f(v){var s=v.toFixed(1);if(+s===0)return"0";return s.replace(/\.?0+$/,"")}
+function f3(v){var s=v.toFixed(3);if(+s===0)return"0";return s.replace(/\.?0+$/,"")}
+function poly(pts,close){var d="M"+pts.map(function(q){return f(q[0])+" "+f(q[1])}).join(" L");return d+(close===false?"":"Z")}
+function arcPts(cx,cy,r,a0,a1,n){var o=[];for(var i=0;i<=n;i++){var a=a0+(a1-a0)*i/n;o.push([cx+r*Math.cos(a),cy+r*Math.sin(a)])}return o}
+function ang(cx,cy,x,y){return Math.atan2(y-cy,x-cx)}
+function sweep(cen,ent,ex){var cx=cen[0],cy=cen[1],r=Math.hypot(ent[0]-cx,ent[1]-cy),a0=ang(cx,cy,ent[0],ent[1]),a1=ang(cx,cy,ex[0],ex[1]);while(a1-a0>Math.PI)a1-=2*Math.PI;while(a0-a1>Math.PI)a1+=2*Math.PI;return arcPts(cx,cy,r,a0,a1,18)}
+function spiralCuts(x,y,w,h,limit){var out=[],mode=0,eps=1e-7;while(w>eps&&h>eps&&out.length<limit){var s=Math.min(w,h),sq,cen,ent,ex;if(mode===0){sq=[x,y,s];cen=[x+s,y];ent=[x,y];ex=[x+s,y+s];x+=s;w-=s}else if(mode===1){sq=[x,y+h-s,s];cen=[x,y+h-s];ent=[x,y+h];ex=[x+s,y+h-s];h-=s}else if(mode===2){sq=[x+w-s,y,s];cen=[x+w-s,y+s];ent=[x+w,y+s];ex=[x+w-s,y];w-=s}else{sq=[x,y,s];cen=[x+s,y+s];ent=[x+s,y];ex=[x,y+s];y+=s;h-=s}out.push([sq,cen,ent,ex]);mode=(mode+1)%4}return out}
+function RNG(seed){this.s=((Math.imul(seed,2654435761)+12345)>>>0)||1}
+RNG.prototype.r=function(){var s=this.s;s=(s^((s<<13)>>>0))>>>0;s=(s^(s>>>17))>>>0;s=(s^((s<<5)>>>0))>>>0;this.s=s;return s/4294967295};
+RNG.prototype.i=function(n){return Math.floor(this.r()*n)%n};
+RNG.prototype.pick=function(a){return a[this.i(a.length)]};
+var PAL={
+classic:{paper:"#F2EBDC",ink:"#1A1A1A",a:"#D62828",b:"#1D4E89",c:"#F4C430",mid:"#8C7A5B",dark:"#0E0E0E"},
+nocturne:{paper:"#1A1D24",ink:"#E8E3D6",a:"#E2453C",b:"#4FA8D8",c:"#F2C41E",mid:"#4A4E58",dark:"#0A0C0E"},
+sepia:{paper:"#EFE3C8",ink:"#3A2A18",a:"#9B4A2A",b:"#6B5A3A",c:"#C9A063",mid:"#B89A6A",dark:"#2B1F12"},
+blueprint:{paper:"#0F2A4A",ink:"#BFE3FF",a:"#FFFFFF",b:"#5FB0E8",c:"#FFD166",mid:"#2E5A8A",dark:"#071A30"},
+mono:{paper:"#F4F2EE",ink:"#111111",a:"#333333",b:"#777777",c:"#BBBBBB",mid:"#999999",dark:"#000000"},
+neon:{paper:"#0B0B12",ink:"#F5F5FF",a:"#FF2E88",b:"#00E5FF",c:"#C6FF00",mid:"#4B3F72",dark:"#05050A"},
+pastel:{paper:"#FBF6EE",ink:"#5A5560",a:"#F7A9A8",b:"#A7C7E7",c:"#F9E79F",mid:"#C9BBD0",dark:"#8E8A96"},
+ochre:{paper:"#E8DCC0",ink:"#2E2418",a:"#C1541F",b:"#6E7C6E",c:"#D9A441",mid:"#8C7A5B",dark:"#3A332B"}};
+var DARKPAL={nocturne:1,blueprint:1,neon:1};
+function RECT(x,y,s,fill,extra){return'<rect x="'+f(x)+'" y="'+f(y)+'" width="'+f(s)+'" height="'+f(s)+'" fill="'+fill+'"'+(extra||"")+'/>'}
+function L_euclid(x,y,s,p,r){var o=[RECT(x,y,s,p.paper)];for(var k=1;k<6;k++)o.push('<path d="'+poly([[x,y+s*k/6],[x+s,y+s*k/6]])+'" stroke="'+p.ink+'" stroke-width=".5" opacity=".5"/>');o.push('<path d="'+poly([[x,y],[x+s,y+s]])+'" stroke="'+p.ink+'" stroke-width=".8"/>');o.push('<circle cx="'+f(x+s*.5)+'" cy="'+f(y+s*.5)+'" r="'+f(s*.3)+'" fill="none" stroke="'+p.ink+'" stroke-width=".6" opacity=".6"/>');return o.join("")}
+function L_renais(x,y,s,p,r){var o=[RECT(x,y,s,p.mid)],k=0;while(k<s){o.push('<path d="'+poly([[x+k,y],[x,y+k]])+'" stroke="'+p.dark+'" stroke-width=".7" opacity=".55"/>');k+=6}return o.join("")}
+function L_bauhaus(x,y,s,p,r){return RECT(x,y,s,r.pick([p.a,p.b,p.c]))+'<circle cx="'+f(x+s/2)+'" cy="'+f(y+s/2)+'" r="'+f(s/3.2)+'" fill="'+p.ink+'"/>'}
+function L_destijl(x,y,s,p,r){var a=s*.38,b=s*.62,w=Math.max(2,s/22);return RECT(x,y,s,p.paper)+'<rect x="'+f(x)+'" y="'+f(y)+'" width="'+f(a)+'" height="'+f(b)+'" fill="'+p.a+'"/><rect x="'+f(x+a)+'" y="'+f(y+b)+'" width="'+f(s-a)+'" height="'+f(s-b)+'" fill="'+p.b+'"/><path d="'+poly([[x+a,y],[x+a,y+s]])+'" stroke="'+p.dark+'" stroke-width="'+f(w)+'"/><path d="'+poly([[x,y+b],[x+s,y+b]])+'" stroke="'+p.dark+'" stroke-width="'+f(w)+'"/>'}
+function L_cubist(x,y,s,p,r){var cs=[[x,y],[x+s,y],[x+s,y+s],[x,y+s]],m=[x+s*(.3+.4*r.r()),y+s*(.3+.4*r.r())],col=[p.mid,p.paper,p.b,p.dark,p.c],o="";for(var j=0;j<4;j++)o+='<path d="'+poly([cs[j],cs[(j+1)%4],m])+'" fill="'+r.pick(col)+'" stroke="'+p.dark+'" stroke-width=".6"/>';return o}
+function L_op(x,y,s,p,r){var o=[RECT(x,y,s,p.paper)],w=Math.max(2,s/16),k=0;while(k<s){o.push('<rect x="'+f(x+k)+'" y="'+f(y)+'" width="'+f(Math.min(w,s-k))+'" height="'+f(s)+'" fill="'+p.ink+'"/>');k+=w*2}return'<g class="op">'+o.join("")+'</g>'}
+function L_halftone(x,y,s,p,r){var pid="h"+Math.trunc(x)+"_"+Math.trunc(y),cell=Math.max(9,s/12);return'<pattern id="'+pid+'" x="'+f(x)+'" y="'+f(y)+'" width="'+f(cell)+'" height="'+f(cell)+'" patternUnits="userSpaceOnUse"><rect width="'+f(cell)+'" height="'+f(cell)+'" fill="'+p.dark+'"/><circle cx="'+f(cell/2)+'" cy="'+f(cell/2)+'" r="'+f(cell*.34)+'" fill="'+p.paper+'"/></pattern><g class="ht"><rect x="'+f(x)+'" y="'+f(y)+'" width="'+f(s)+'" height="'+f(s)+'" fill="url(#'+pid+')"/><rect x="'+f(x)+'" y="'+f(y)+'" width="'+f(s)+'" height="'+f(s)+'" fill="'+p.dark+'" opacity=".0"></rect></g>'}
+function L_minimal(x,y,s,p,r){return RECT(x,y,s,p.dark)+RECT(x+s*.191,y+s*.191,s*.618,p.paper)}
+function L_constr(x,y,s,p,r){return RECT(x,y,s,p.paper)+'<path d="'+poly([[x,y+s],[x+s,y],[x+s,y+s*.55]])+'" fill="'+p.a+'"/><path d="'+poly([[x,y+s*.2],[x+s*.7,y+s*.2]])+'" stroke="'+p.dark+'" stroke-width="'+f(Math.max(1.5,s/30))+'"/><circle cx="'+f(x+s*.22)+'" cy="'+f(y+s*.72)+'" r="'+f(s*.08)+'" fill="'+p.dark+'"/>'}
+function L_suprem(x,y,s,p,r){var cx=x+s/2,cy=y+s/2,h=s*.3;return RECT(x,y,s,p.paper)+'<rect x="'+f(cx-h)+'" y="'+f(cy-h)+'" width="'+f(2*h)+'" height="'+f(2*h)+'" fill="'+p.dark+'" transform="rotate(12 '+f(cx)+' '+f(cy)+')"/><rect x="'+f(x+s*.68)+'" y="'+f(y+s*.12)+'" width="'+f(s*.18)+'" height="'+f(s*.06)+'" fill="'+p.a+'" transform="rotate(-20 '+f(x+s*.77)+' '+f(y+s*.15)+')"/>'}
+function L_deco(x,y,s,p,r){var o=[RECT(x,y,s,p.dark)],cx=x+s/2,cy=y+s;for(var k=0;k<9;k++){var a=Math.PI+k*Math.PI/8;o.push('<path d="'+poly([[cx,cy],[cx+s*1.2*Math.cos(a),cy+s*1.2*Math.sin(a)]])+'" stroke="'+p.c+'" stroke-width="'+f(Math.max(1,s/40))+'"/>')}var id="d"+Math.trunc(x)+Math.trunc(y);o.push('<clipPath id="'+id+'"><rect x="'+f(x)+'" y="'+f(y)+'" width="'+f(s)+'" height="'+f(s)+'"/></clipPath>');return'<g clip-path="url(#'+id+')">'+o.join("")+'</g>'}
+function L_girih(x,y,s,p,r){var cx=x+s/2,cy=y+s/2,R=s*.42,outer=[],inner=[],star=[],i;for(i=0;i<5;i++){outer.push([cx+R*Math.cos(-Math.PI/2+i*2*Math.PI/5),cy+R*Math.sin(-Math.PI/2+i*2*Math.PI/5)]);inner.push([cx+R/(PHI*PHI)*Math.cos(Math.PI/2+i*2*Math.PI/5),cy+R/(PHI*PHI)*Math.sin(Math.PI/2+i*2*Math.PI/5)])}for(i=0;i<5;i++){star.push(outer[i]);star.push(inner[(i+3)%5])}return RECT(x,y,s,p.paper)+'<path d="'+poly(star)+'" fill="'+p.a+'" stroke="'+p.ink+'" stroke-width=".8"/><path d="'+poly(inner)+'" fill="'+p.b+'"/>'}
+function L_ukiyoe(x,y,s,p,r){var pts=[];for(var t=0;t<11;t++)pts.push([x+s*t/10,y+s*(.62-.18*Math.sin(t/10*Math.PI*2))]);var wave=poly(pts,false)+" L"+f(x+s)+" "+f(y+s)+" L"+f(x)+" "+f(y+s)+" Z";return RECT(x,y,s,p.paper)+'<path d="'+wave+'" fill="'+p.b+'"/><path d="'+poly(pts,false)+'" fill="none" stroke="'+p.paper+'" stroke-width="'+f(Math.max(1,s/26))+'"/><circle cx="'+f(x+s*.78)+'" cy="'+f(y+s*.22)+'" r="'+f(s*.09)+'" fill="'+p.a+'"/>'}
+function L_pop(x,y,s,p,r){var o=[RECT(x,y,s,p.paper)],n=Math.min(9,Math.max(4,Math.trunc(s/11))),d=s/n;for(var i=0;i<n;i++)for(var j=0;j<n;j++)if((i+j)%2===0)o.push('<circle cx="'+f(x+(i+.5)*d)+'" cy="'+f(y+(j+.5)*d)+'" r="'+f(d*.36)+'" fill="'+p.a+'"/>');o.push('<path d="'+poly([[x+s,y],[x+s,y+s],[x+s*.45,y+s]])+'" fill="'+p.c+'" opacity=".85"/>');return o.join("")}
+function L_brutal(x,y,s,p,r){var o=[RECT(x,y,s,p.mid)],n=4,w=f(Math.max(1.2,s/50));for(var k=1;k<n;k++){o.push('<path d="'+poly([[x+s*k/n,y],[x+s*k/n,y+s]])+'" stroke="'+p.dark+'" stroke-width="'+w+'"/>');o.push('<path d="'+poly([[x,y+s*k/n],[x+s,y+s*k/n]])+'" stroke="'+p.dark+'" stroke-width="'+w+'"/>')}o.push(RECT(x+s*.5,y+s*.5,s*.5,p.dark));return o.join("")}
+function L_blue(x,y,s,p,r){var cx=x+s/2,cy=y+s/2;return RECT(x,y,s,p.dark)+'<circle cx="'+f(cx)+'" cy="'+f(cy)+'" r="'+f(s*.36)+'" fill="none" stroke="'+p.ink+'" stroke-width=".8"/><rect x="'+f(x+s*.18)+'" y="'+f(y+s*.18)+'" width="'+f(s*.64)+'" height="'+f(s*.64)+'" fill="none" stroke="'+p.ink+'" stroke-width=".8"/><path d="'+poly([[x,y],[x+s,y+s]])+'M'+f(x+s)+' '+f(y)+'L'+f(x)+' '+f(y+s)+'" stroke="'+p.ink+'" stroke-width=".5" opacity=".6" fill="none"/><path d="M'+f(cx)+' '+f(y+s*.1)+'V'+f(y+s*.9)+'M'+f(x+s*.1)+' '+f(cy)+'H'+f(x+s*.9)+'" stroke="'+p.ink+'" stroke-width=".5" opacity=".6"/>'}
+var LENSES=[["EUCLID",L_euclid],["RENAISSANCE",L_renais],["BAUHAUS",L_bauhaus],["DE STIJL",L_destijl],["CUBIST",L_cubist],["OP ART",L_op],["HALFTONE",L_halftone],["MINIMAL",L_minimal],["CONSTRUCTIVIST",L_constr],["SUPREMATIST",L_suprem],["ART DECO",L_deco],["GIRIH",L_girih],["UKIYO-E",L_ukiyoe],["POP",L_pop],["BRUTALIST",L_brutal],["BLUEPRINT",L_blue]];
+var MONO="ui-monospace,Menlo,Consolas,monospace",MARGIN=40,CAP=40;
+function pad3(n){return(n<10?"00":n<100?"0":"")+n}
+function compose(rung,orient,lensSeq,palName,anim,idx,tier,isPhi){
+  var p=PAL[palName],r=new RNG(idx*7919+rung*31+orient);
+  var ratio=isPhi?PHI:rungRatio(rung),limit=isPhi?12:rung;
+  var portrait=(orient%4===1||orient%4===3);
+  var CW=portrait?700:1000,CH=portrait?1000:700,aw=CW-2*MARGIN,ah=CH-2*MARGIN-CAP,W,H;
+  if(portrait){W=Math.min(ah,aw*ratio);H=W/ratio}else{W=Math.min(aw,ah*ratio);H=W/ratio}
+  var cuts=spiralCuts(0,0,W,H,limit),ox,oy;
+  if(portrait){ox=(CW-H)/2;oy=MARGIN+(ah-W)/2}else{ox=(CW-W)/2;oy=MARGIN+(ah-H)/2}
+  var rot=orient%4,T=[
+    "translate("+f(ox)+","+f(oy)+")",
+    "translate("+f(ox+H)+","+f(oy)+") rotate(90)",
+    "translate("+f(ox+W)+","+f(oy+H)+") rotate(180)",
+    "translate("+f(ox)+","+f(oy+W)+") rotate(270)"][rot];
+  if(orient>=4)T+=" translate("+f(W)+",0) scale(-1,1)";
+  var deep=spiralCuts(0,0,W,H,40),last=deep[deep.length-1][0],eye=[last[0]+last[2]/2,last[1]+last[2]/2];
+  var squares=[],spiral=[],n=lensSeq.length;
+  for(var i=0;i<cuts.length;i++){
+    var sq=cuts[i][0],cen=cuts[i][1],ent=cuts[i][2],ex=cuts[i][3],x=sq[0],y=sq[1],s=sq[2];
+    var li=lensSeq[i%n],body=LENSES[li][1](x,y,s,p,r);
+    if(anim==="morph"){var lj=lensSeq[(i+1)%n],b2=LENSES[lj][1](x,y,s,p,new RNG(idx*13+i));body='<g>'+body+'</g><g opacity="0">'+b2+'<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.35;.5;.85;1" dur="12s" begin="'+f(i*.3)+'s" repeatCount="indefinite"/></g>'}
+    if(anim==="reveal"){var t0=.01+i/cuts.length*.6;body='<g>'+body+'<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;'+f3(t0)+';'+f3(t0+.06)+';.9;1" dur="9s" repeatCount="indefinite"/></g>'}
+    if(anim==="breathe"){var cx=x+s/2,cy=y+s/2;body='<g transform="translate('+f(cx)+','+f(cy)+')"><g><animateTransform attributeName="transform" type="scale" values="1;1.035;1" dur="'+f(4+i*.5)+'s" repeatCount="indefinite"/><g transform="translate('+f(-cx)+','+f(-cy)+')">'+body+'</g></g></g>'}
+    if(anim==="zoom"){var lk=lensSeq[((i-1)%n+n)%n],b3=LENSES[lk][1](x,y,s,p,new RNG(idx*17+i));body='<g>'+body+'</g><g opacity="0">'+b3+'<animate attributeName="opacity" from="0" to="1" dur="8s" repeatCount="indefinite"/></g>'}
+    squares.push(body);spiral=spiral.concat(sweep(cen,ent,ex))
+  }
+  var spd=poly(spiral,false),spLen=0;
+  for(i=0;i<spiral.length-1;i++)spLen+=Math.hypot(spiral[i+1][0]-spiral[i][0],spiral[i+1][1]-spiral[i][1]);
+  var line=DARKPAL[palName]?p.ink:p.dark;
+  var spiralEl='<path d="'+spd+'" fill="none" stroke="'+line+'" stroke-width="4" stroke-linecap="round" opacity=".88"';
+  if(anim==="draw")spiralEl+=' stroke-dasharray="'+f(spLen)+'" stroke-dashoffset="'+f(spLen)+'"><animate attributeName="stroke-dashoffset" values="'+f(spLen)+';0;0;'+f(spLen)+'" keyTimes="0;.45;.7;1" dur="10s" repeatCount="indefinite"/></path>';else spiralEl+='/>';
+  var keys="";for(i=0;i<cuts.length;i++){var q=cuts[i][0];keys+='<rect x="'+f(q[0])+'" y="'+f(q[1])+'" width="'+f(q[2])+'" height="'+f(q[2])+'" fill="none" stroke="'+line+'" stroke-width="1.6"/>'}
+  var extra="";if(anim==="orbit")extra='<circle r="7" fill="'+p.c+'" stroke="'+p.dark+'" stroke-width="2"><animateMotion dur="14s" repeatCount="indefinite" path="'+spd+'"/></circle>';
+  var inner='<g transform="'+T+'">'+squares.join("")+spiralEl+keys+extra+'</g>';
+  if(anim==="zoom"){var vals=[],kt=[];for(var k=0;k<9;k++){vals.push(f3(Math.pow(PHI,k/8)));kt.push(f3(k/8))}
+    inner='<clipPath id="cz"><rect x="'+f(MARGIN)+'" y="'+f(MARGIN)+'" width="'+f(aw)+'" height="'+f(ah)+'"/></clipPath><g clip-path="url(#cz)"><g transform="'+T+'"><g transform="translate('+f(eye[0])+','+f(eye[1])+')"><g><animateTransform attributeName="transform" type="scale" values="'+vals.join(";")+'" keyTimes="'+kt.join(";")+'" dur="8s" repeatCount="indefinite"/><g><animateTransform attributeName="transform" type="rotate" from="0" to="90" dur="8s" repeatCount="indefinite"/><g transform="translate('+f(-eye[0])+','+f(-eye[1])+')">'+squares.join("")+spiralEl+keys+'</g></g></g></g></g></g>'}
+  var filt="";
+  if(anim==="hue"){filt='<filter id="hue"><feColorMatrix type="hueRotate" values="0"><animate attributeName="values" from="0" to="360" dur="30s" repeatCount="indefinite"/></feColorMatrix></filter>';inner='<g filter="url(#hue)">'+inner+'</g>'}
+  if(anim==="drift")filt+='<style>.op rect:nth-child(n+2){animation:dr 6s linear infinite}@keyframes dr{to{transform:translateX(12px)}}.ht{animation:pu 3s ease-in-out infinite alternate}@keyframes pu{to{opacity:.45}}</style>';
+  var cf=isPhi?"[1;1,1,1,\u2026]":cfString(rung),rt=isPhi?"\u03c6":FIB[rung]+"/"+FIB[rung-1];
+  var cap='<rect x="0" y="'+(CH-CAP)+'" width="'+CW+'" height="'+CAP+'" fill="#0E0E0E"/><text x="22" y="'+(CH-15)+'" font-family="'+MONO+'" font-size="11.5" letter-spacing="1.5" fill="#E8E3D6">'+cf+'  \u00b7  '+rt+'  \u00b7  '+tier+'</text><text x="'+(CW-22)+'" y="'+(CH-15)+'" font-family="'+MONO+'" font-size="11.5" letter-spacing="1.5" text-anchor="end" fill="#E8E3D6">'+pad3(idx)+' / 161</text>';
+  var bg=DARKPAL[palName]?p.dark:p.paper;
+  return{svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+CW+' '+CH+'"><rect width="'+CW+'" height="'+CH+'" fill="'+bg+'"/>'+filt+inner+cap+'</svg>',cf:cf,ratio:rt,squares:cuts.length,CW:CW,CH:CH}
+}
+</script>
+<script id="app">
+/* ═══════════════ PHI 161 — page runtime ═══════════════ */
+(function(){
+"use strict";
+var PLAN=[[0,1,0,4,0,[9],""],[0,2,0,0,0,[7],""],[0,3,0,0,0,[2],""],[1,12,0,0,1,[0,0,0,0,0,0,0,0,0,0,0,0],""],[1,12,1,2,1,[1,1,1,1,1,1,1,1,1,1,1,1],""],[1,12,2,0,1,[2,2,2,2,2,2,2,2,2,2,2,2],""],[1,12,3,0,1,[3,3,3,3,3,3,3,3,3,3,3,3],""],[1,12,4,7,1,[4,4,4,4,4,4,4,4,4,4,4,4],""],[1,12,5,4,1,[5,5,5,5,5,5,5,5,5,5,5,5],""],[1,12,6,1,1,[6,6,6,6,6,6,6,6,6,6,6,6],""],[1,12,7,4,1,[7,7,7,7,7,7,7,7,7,7,7,7],""],[1,12,0,0,1,[8,11,8,11,8,11,8,11,8,11,8,11],""],[1,12,1,6,1,[9,10,9,10,9,10,9,10,9,10,9,10],""],[1,12,2,3,1,[12,13,12,13,12,13,12,13,12,13,12,13],""],[1,12,3,2,1,[14,15,14,15,14,15,14,15,14,15,14,15],""],[1,12,4,5,1,[3,11,3,11,3,11,3,11,3,11,3,11],""],[2,5,0,5,4,[15,14,13,12,11],"reverse"],[2,5,0,1,6,[14,0,2,2,0],"mirror"],[2,5,1,6,2,[2,3,2,15,13],"walk"],[2,5,6,1,2,[5,3,1,4,1],"walk"],[2,5,2,5,1,[2,1,0,15,14],"reverse"],[2,5,5,0,4,[4,3,2,1,0],"reverse"],[2,5,6,6,1,[1,6,13,1,6],"triple"],[2,5,3,6,1,[0,2,10,0,2],"triple"],[2,5,2,1,2,[0,3,6,7,5],"walk"],[2,5,2,7,4,[12,15,4,12,15],"triple"],[2,6,6,1,4,[8,7,6,5,4,3],"reverse"],[2,6,2,3,3,[6,7,8,9,10,11],"cyclic"],[2,6,1,2,4,[5,6,7,8,9,10],"cyclic"],[2,6,0,4,3,[0,15,14,13,12,11],"reverse"],[2,6,4,2,2,[10,11,12,13,14,15],"cyclic"],[2,6,0,7,7,[7,4,5,6,8,7],"walk"],[2,6,5,1,4,[10,15,2,10,15,2],"triple"],[2,6,1,3,3,[9,10,11,12,13,14],"cyclic"],[2,6,5,3,3,[8,14,4,8,14,4],"triple"],[2,6,6,4,5,[4,6,8,8,6,4],"mirror"],[2,6,7,3,5,[6,5,4,3,2,1],"reverse"],[2,6,6,6,4,[6,12,14,6,12,14],"triple"],[2,7,7,5,2,[11,10,9,8,7,6,5],"reverse"],[2,7,5,1,4,[5,7,13,5,7,13,5],"triple"],[2,7,3,2,6,[2,4,6,8,8,6,4],"mirror"],[2,7,3,6,1,[12,13,14,15,0,1,2],"cyclic"],[2,7,0,7,2,[2,6,10,2,6,10,2],"triple"],[2,7,6,5,2,[5,7,9,11,11,9,7],"mirror"],[2,7,7,4,6,[4,7,9,7,10,12,9],"walk"],[2,7,7,0,4,[13,15,1,3,3,1,15],"mirror"],[2,7,4,6,4,[10,8,5,8,9,11,9],"walk"],[2,7,7,6,6,[9,8,7,6,5,4,3],"reverse"],[2,7,6,3,1,[2,3,4,5,6,7,8],"cyclic"],[2,7,3,7,2,[1,14,12,13,15,0,3],"walk"],[2,7,5,3,1,[9,8,10,11,9,7,8],"walk"],[2,7,4,7,6,[14,13,12,11,10,9,8],"reverse"],[2,8,5,4,1,[10,9,8,7,6,5,4,3],"reverse"],[2,8,3,4,1,[14,11,14,12,11,14,15,14],"walk"],[2,8,2,5,3,[1,3,5,7,7,5,3,1],"mirror"],[2,8,4,3,5,[3,4,2,4,2,3,4,7],"walk"],[2,8,4,0,5,[4,6,8,10,10,8,6,4],"mirror"],[2,8,0,7,2,[11,13,15,1,1,15,13,11],"mirror"],[2,8,3,5,4,[11,12,13,14,15,0,1,2],"cyclic"],[2,8,0,6,3,[10,12,6,10,12,6,10,12],"triple"],[2,8,1,6,2,[2,8,13,2,8,13,2,8],"triple"],[2,8,3,7,5,[7,9,11,13,13,11,9,7],"mirror"],[2,8,4,6,5,[15,2,0,14,0,2,0,14],"walk"],[2,8,2,0,2,[8,10,12,14,14,12,10,8],"mirror"],[2,8,0,2,3,[10,7,9,11,13,14,1,3],"walk"],[2,8,2,7,3,[15,0,1,2,3,4,5,6],"cyclic"],[2,8,6,2,5,[14,0,13,14,13,11,10,13],"walk"],[2,8,1,0,3,[14,15,0,1,2,3,4,5],"cyclic"],[2,8,7,5,3,[10,14,6,10,14,6,10,14],"triple"],[2,8,5,7,7,[0,5,11,0,5,11,0,5],"triple"],[2,9,5,5,5,[11,12,13,10,9,6,7,8,7],"walk"],[2,9,5,4,5,[5,8,0,5,8,0,5,8,0],"triple"],[2,9,1,0,6,[7,13,15,7,13,15,7,13,15],"triple"],[2,9,1,7,6,[3,4,5,6,7,8,9,10,11],"cyclic"],[2,9,7,7,1,[2,4,6,8,10,10,8,6,4],"mirror"],[2,9,6,4,6,[14,1,7,14,1,7,14,1,7],"triple"],[2,9,6,5,2,[5,2,5,4,6,7,8,6,3],"walk"],[2,9,1,4,2,[1,3,5,7,9,9,7,5,3],"mirror"],[2,9,7,1,4,[1,14,0,2,0,2,15,1,4],"walk"],[2,9,6,2,6,[7,9,2,7,9,2,7,9,2],"triple"],[2,9,7,2,4,[12,14,12,14,15,2,15,2,15],"walk"],[2,9,0,0,6,[15,3,11,15,3,11,15,3,11],"triple"],[2,9,1,2,2,[15,2,3,2,15,0,15,0,3],"walk"],[2,9,7,0,6,[11,1,3,11,1,3,11,1,3],"triple"],[2,9,6,0,4,[10,12,14,0,2,2,0,14,12],"mirror"],[2,9,7,6,2,[3,4,6,8,6,9,11,14,0],"walk"],[2,9,4,5,5,[9,11,13,15,1,1,15,13,11],"mirror"],[2,9,4,3,3,[5,7,9,11,13,13,11,9,7],"mirror"],[2,9,7,3,7,[2,5,14,2,5,14,2,5,14],"triple"],[2,9,4,7,1,[8,7,8,10,11,14,15,0,2],"walk"],[2,10,6,0,5,[15,1,3,5,7,7,5,3,1,15],"mirror"],[2,10,0,7,4,[8,11,9,7,8,10,11,13,11,14],"walk"],[2,10,7,2,1,[5,4,3,2,1,0,15,14,13,12],"reverse"],[2,10,0,0,7,[3,2,4,7,5,8,11,14,13,10],"walk"],[2,10,7,3,2,[11,13,15,1,3,3,1,15,13,11],"mirror"],[2,10,1,0,3,[11,14,1,0,15,2,1,0,14,13],"walk"],[2,10,4,2,7,[0,2,4,6,8,8,6,4,2,0],"mirror"],[2,10,5,5,6,[7,6,5,4,3,2,1,0,15,14],"reverse"],[2,10,1,1,7,[0,15,13,0,3,5,7,5,4,2],"walk"],[2,10,6,7,2,[9,7,4,2,0,1,15,12,11,8],"walk"],[2,10,2,3,3,[0,4,11,0,4,11,0,4,11,0],"triple"],[2,10,6,1,6,[13,14,15,0,1,2,3,4,5,6],"cyclic"],[2,10,2,0,3,[8,9,7,4,2,1,3,5,7,6],"walk"],[2,10,3,7,4,[11,14,0,14,11,12,9,7,8,7],"walk"],[2,10,2,7,1,[13,12,11,10,9,8,7,6,5,4],"reverse"],[2,10,7,4,1,[3,5,2,4,5,6,7,8,5,8],"walk"],[2,10,5,1,2,[11,10,13,15,14,1,15,13,15,14],"walk"],[2,10,3,2,5,[3,6,14,3,6,14,3,6,14,3],"triple"],[2,10,3,5,2,[3,5,7,9,11,11,9,7,5,3],"mirror"],[2,10,3,1,2,[15,4,7,15,4,7,15,4,7,15],"triple"],[2,10,2,1,5,[6,8,10,12,14,14,12,10,8,6],"mirror"],[2,10,4,4,6,[15,12,10,7,9,8,7,9,7,8],"walk"],[2,11,2,5,6,[11,13,15,1,3,5,5,3,1,15,13],"mirror"],[2,11,3,6,7,[5,7,10,13,11,9,12,13,15,2,4],"walk"],[2,11,4,1,2,[6,10,2,6,10,2,6,10,2,6,10],"triple"],[2,11,0,0,2,[2,15,12,9,8,10,8,10,8,9,10],"walk"],[2,11,4,7,2,[2,4,13,2,4,13,2,4,13,2,4],"triple"],[2,11,1,7,4,[4,6,8,10,12,14,14,12,10,8,6],"mirror"],[2,11,6,5,2,[8,10,12,14,0,2,2,0,14,12,10],"mirror"],[2,11,5,6,4,[7,4,2,4,3,4,3,2,4,7,4],"walk"],[2,11,7,7,6,[1,2,3,4,5,6,7,8,9,10,11],"cyclic"],[2,11,6,7,7,[12,11,10,9,8,7,6,5,4,3,2],"reverse"],[2,11,3,4,4,[3,5,11,3,5,11,3,5,11,3,5],"triple"],[2,11,5,4,2,[6,8,10,12,14,0,0,14,12,10,8],"mirror"],[2,11,0,3,6,[14,11,10,9,7,5,7,4,3,4,1],"walk"],[2,11,7,0,4,[8,5,4,5,4,1,14,13,0,2,5],"walk"],[2,11,3,0,7,[1,3,5,7,9,11,11,9,7,5,3],"mirror"],[2,11,5,1,5,[10,12,14,0,2,4,4,2,0,14,12],"mirror"],[2,11,6,2,4,[4,5,6,7,8,9,10,11,12,13,14],"cyclic"],[2,11,4,0,5,[5,7,9,11,13,15,15,13,11,9,7],"mirror"],[2,11,6,0,4,[1,0,15,14,13,12,11,10,9,8,7],"reverse"],[2,11,5,2,1,[7,9,11,13,15,1,1,15,13,11,9],"mirror"],[2,11,6,1,2,[10,12,15,2,15,2,0,1,2,0,3],"walk"],[2,11,2,6,4,[11,14,6,11,14,6,11,14,6,11,14],"triple"],[2,11,7,5,4,[8,9,10,11,12,13,14,15,0,1,2],"cyclic"],[2,11,5,0,5,[12,15,2,5,3,2,4,5,8,11,13],"walk"],[2,12,0,2,4,[15,0,15,1,15,14,0,2,0,3,5,6],"walk"],[2,12,7,2,5,[12,11,10,9,10,9,10,13,10,7,9,10],"walk"],[2,12,6,6,3,[12,2,8,12,2,8,12,2,8,12,2,8],"triple"],[2,12,7,7,6,[9,11,8,9,8,11,13,12,14,15,1,2],"walk"],[2,12,3,3,2,[0,1,2,3,4,5,6,7,8,9,10,11],"cyclic"],[2,12,7,1,2,[2,4,11,2,4,11,2,4,11,2,4,11],"triple"],[2,12,2,1,5,[11,8,7,9,8,9,11,13,15,1,3,5],"walk"],[2,12,7,5,1,[7,8,9,10,11,12,13,14,15,0,1,2],"cyclic"],[2,12,4,0,7,[14,13,12,9,11,10,7,8,6,3,2,4],"walk"],[2,12,5,0,2,[8,13,1,8,13,1,8,13,1,8,13,1],"triple"],[2,12,2,4,1,[3,5,7,9,11,13,13,11,9,7,5,3],"mirror"],[2,12,1,0,3,[9,11,13,15,1,3,3,1,15,13,11,9],"mirror"],[2,12,1,1,5,[6,11,2,6,11,2,6,11,2,6,11,2],"triple"],[2,12,2,0,5,[5,9,15,5,9,15,5,9,15,5,9,15],"triple"],[2,12,7,6,5,[12,0,6,12,0,6,12,0,6,12,0,6],"triple"],[2,12,1,3,5,[7,12,15,7,12,15,7,12,15,7,12,15],"triple"],[2,12,5,4,4,[2,4,6,8,10,12,12,10,8,6,4,2],"mirror"],[2,12,5,3,1,[14,15,1,0,2,4,6,4,7,4,1,4],"walk"],[2,12,2,7,2,[9,10,13,15,0,14,15,0,13,15,1,3],"walk"],[2,12,0,4,6,[4,7,9,6,4,6,4,3,2,3,5,4],"walk"],[2,12,1,7,7,[14,2,6,14,2,6,14,2,6,14,2,6],"triple"],[2,12,6,1,1,[15,1,3,5,7,9,9,7,5,3,1,15],"mirror"],[2,12,4,4,2,[9,6,3,2,15,12,9,6,7,9,11,8],"walk"],[2,12,4,1,5,[8,9,8,6,3,0,14,15,12,13,0,14],"walk"],[3,12,0,0,8,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],""]];
+var PALS=["classic","nocturne","sepia","blueprint","mono","neon","pastel","ochre"];
+var ANIMS=["none","breathe","draw","reveal","hue","morph","orbit","drift","zoom"];
+var TIERS=["ORIGIN","PLATE","DESCENT","LIMIT"];
+var ORIENT=["0°","90°","180°","270°","0° mirrored","90° mirrored","180° mirrored","270° mirrored"];
+var N=161;
+
+/* Set LIVE to false and the page never contacts ACME on its own; it then shows the fixed facts only. */
+var LIVE=true;
+/* Fixed on Bitcoin. Checked at block 969,621. */
+var C={sha:"127d2ea4a0a95fa605c013fb6af278ab28840964c0690c68c2e81df5d045963d",bytes:28881,
+  reveal:"b4dde092ff7f28e552c6f8a5e0a27c9ef1c3c90e32cb021919b4c72fc570216d",
+  mint:"https://acme.pics/dex/nft/editions/PHI",asset:"https://acme.pics/asset/",
+  minters:"https://acme.pics/api/assets/PHI/openminters?limit=20",content:"https://acme.pics/api/assets/PHI/content",
+  txapi:"https://mempool.space/api/tx/",price:16180};
+
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function p3(n){return String(n).padStart(3,"0")}
+function fmt(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,",")}
+function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+function clamp(v,a,b){return v<a?a:v>b?b:v}
+var DOT="\u00a0· "; /* a separator that never starts a line */
+
+/* ── what each piece is. Read straight from the plan; nothing here is stored twice. ── */
+var FACTS=[];
+function facts(i){
+  if(FACTS[i])return FACTS[i];
+  var d=PLAN[i-1],isPhi=d[0]===3,seen={},u=[];
+  /* the lenses of the squares that are drawn: φ lists all sixteen in its plan and draws twelve squares */
+  d[5].slice(0,isPhi?12:d[5].length).forEach(function(x){if(!seen[x]){seen[x]=1;u.push(LENSES[x][0])}});
+  return FACTS[i]={i:i,asset:"PHI."+p3(i-1),t:d[0],tier:TIERS[d[0]],rung:d[1],isPhi:isPhi,
+    ratio:isPhi?"φ":FIB[d[1]]+"/"+FIB[d[1]-1],cf:isPhi?"[1;1,1,1,…]":cfString(d[1]),squares:isPhi?12:d[1],
+    orient:ORIENT[d[2]],portrait:d[2]%4===1||d[2]%4===3,pal:PALS[d[3]],anim:ANIMS[d[4]],lenses:u};
+}
+function name(f){return f.isPhi?"The Limit":"Piece "+p3(f.i)}
+function lensText(f){return f.lenses.join(DOT)+(f.isPhi?'<small class="gr">twelve squares drawn; its plan lists all sixteen</small>':"")}
+
+/* ── drawing. svgLive() is the engine's output, untouched. Every picture on this page is that SVG inside its
+     own <img>, so one piece can never pick up another's patterns, clip paths or CSS. ── */
+function svgLive(i){var d=PLAN[i-1];return compose(d[1],d[2],d[5],PALS[d[3]],ANIMS[d[4]],i,TIERS[d[0]],d[0]===3).svg}
+/* the same drawing with its motion taken out: a fully composed still, for thumbnails and for "motion off" */
+function svgStill(i){return svgLive(i)
+  .replace(/<circle r="7"[^>]*><animateMotion[^>]*\/><\/circle>/g,"")
+  .replace(/<animate(?:Transform)?\b[^>]*\/>/g,"")
+  .replace(/<style>[\s\S]*?<\/style>/g,"")
+  .replace(/ stroke-dasharray="[^"]*" stroke-dashoffset="[^"]*"/g,"")}
+/* an explicit size on the root, so every browser can also paint it to a canvas */
+function sized(s){return s.replace(/^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" viewBox="0 0 (\d+) (\d+)">/,'<svg xmlns="http://www.w3.org/2000/svg" width="$1" height="$2" viewBox="0 0 $1 $2">')}
+var URLS={};
+function src(i,still){var k=(still?"s":"l")+i;
+  if(!URLS[k])URLS[k]=URL.createObjectURL(new Blob([sized(still?svgStill(i):svgLive(i))],{type:"image/svg+xml;charset=utf-8"}));
+  return URLS[k]}
+
+/* ── motion on / off ── */
+var MOTION=!(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+var liveImgs=[];
+function setArt(img,i,still){var f=facts(i);
+  img.setAttribute("data-piece",i);img.width=f.portrait?700:1000;img.height=f.portrait?1000:700;
+  img.alt="Piece "+p3(i)+" of 161"+(f.isPhi?", The Limit":"")+": "+f.ratio+", "+f.tier.toLowerCase()+", "+(f.anim==="none"?"still":f.anim+" animation")+".";
+  if(still)img.src=src(i,true);
+  else{if(liveImgs.indexOf(img)<0)liveImgs.push(img);img.src=src(i,!MOTION)}}
+function setMotion(on){MOTION=on;
+  liveImgs.forEach(function(im){im.src=src(+im.getAttribute("data-piece"),!on)});
+  document.body.classList.toggle("still",!on);
+  $("#mot").setAttribute("aria-pressed",on?"true":"false");$("#mot-s").textContent=on?"on":"off";
+  $("#hint").textContent="every rectangle is a piece from the collection"+(on?" · hold to reverse · move to steer":"");
+  run();if(!raf)paint()}
+
+/* ── the mint, as ACME reports it ── */
+var mint={state:"wait",minted:0,price:C.price,open:false,closed:false,at:null,t:0};
+function stateOf(i){return mint.state!=="ok"?"unknown":i<=mint.minted?"minted":i===mint.minted+1&&mint.open?"next":"future"}
+
+/* ══ build: the system demo ══ */
+(function(){var host=$("#sys-demo");
+  [[20,"5 squares, then it stops"],[161,"12 drawn. It never stops."]].forEach(function(p){
+    var f=facts(p[0]),fig=el("figure"),b=el("button","frame wide"),im=el("img");
+    b.type="button";b.setAttribute("data-i",p[0]);b.setAttribute("aria-label","Open "+name(f)+", up close");setArt(im,p[0]);b.appendChild(im);fig.appendChild(b);
+    fig.appendChild(el("figcaption",null,"<span>"+p3(p[0])+" · <b>"+f.ratio+"</b> · "+f.cf+"</span><span>"+p[1]+"</span>"));
+    host.appendChild(fig)})})();
+
+/* ══ build: the ladder. One row per ratio, one square per piece, in mint order. ══ */
+var ladStop=function(){};
+(function(){var host=$("#ladder-map"),rows=[],rowOf=[],cells=[],stop=1,i,r,d;
+  for(i=1;i<=N;i++){d=PLAN[i-1];r=rows[rows.length-1];
+    if(r&&r.t===d[0]&&r.rung===d[1])r.to=i;else rows.push({t:d[0],rung:d[1],from:i,to:i});
+    rowOf[i]=rows.length-1}
+  rows.forEach(function(r){var f=facts(r.from),row=el("div","lr"+(r.t===0?" ori":r.t===3?" lim":"")),p,c,b;
+    var dist=r.t===3?0:Math.abs(FIB[r.rung]/FIB[r.rung-1]-PHI);
+    row.innerHTML='<span class="lr-r">'+f.ratio+(r.t===1?"<small>plates</small>":"")+'</span><span class="lr-c"></span><span class="lr-m">'
+      +(r.t===3?"∞ squares · 0 from φ. It is φ.":f.squares+(f.squares===1?" square":" squares")+" · "+dist.toFixed(7)+" from φ")+"</span>";
+    c=row.children[1];
+    for(p=r.from;p<=r.to;p++){b=el("i");b.setAttribute("data-i",p);b.setAttribute("role","button");b.tabIndex=p===1?0:-1;cells[p]=b;c.appendChild(b)}
+    host.appendChild(row)});
+  var read=$("#lad-read"),idle=read.textContent;
+  function tell(i){var f=facts(i),s=stateOf(i);
+    read.textContent=p3(i)+DOT+f.asset+DOT+f.ratio+DOT+f.anim+(s==="minted"?DOT+"minted":s==="next"?DOT+"next in line":s==="future"?DOT+"to come":"")}
+  function of(e){var t=e.target.closest&&e.target.closest("[data-i]");return t?+t.getAttribute("data-i"):0}
+  host.addEventListener("pointerover",function(e){var i=of(e);if(i)tell(i)});
+  host.addEventListener("pointerleave",function(){if(!host.contains(document.activeElement))read.textContent=idle});
+  host.addEventListener("focusin",function(e){var i=of(e);if(i)tell(i)});
+  host.addEventListener("focusout",function(){read.textContent=idle});
+  /* the keyboard gets one Tab stop here: arrows walk the squares, Enter opens one */
+  ladStop=function(i,focus){if(!focus&&host.contains(document.activeElement))return;
+    cells[stop].tabIndex=-1;stop=i;cells[i].tabIndex=0;if(focus)cells[i].focus()};
+  host.addEventListener("keydown",function(e){var i=of(e),k=e.key,j=i,o;if(!i||e.altKey||e.ctrlKey||e.metaKey)return;
+    if(k==="Enter"){e.preventDefault();openPiece(i);return}
+    if(k===" "){e.preventDefault();return}   /* Space opens on release, as it does on a button: opened on the press, a held key would close the viewer again when let go */
+    if(k==="ArrowRight")j=i+1;else if(k==="ArrowLeft")j=i-1;else if(k==="Home")j=1;else if(k==="End")j=N;
+    else if(k==="ArrowDown"||k==="ArrowUp"){o=rows[rowOf[i]+(k==="ArrowDown"?1:-1)];if(!o)return;j=Math.min(o.from+(i-rows[rowOf[i]].from),o.to)}
+    else return;
+    e.preventDefault();ladStop(clamp(j,1,N),true)});
+  host.addEventListener("keyup",function(e){var i=of(e);if(i&&e.key===" "&&!e.altKey&&!e.ctrlKey&&!e.metaKey){e.preventDefault();openPiece(i)}})})();
+
+/* ══ build: tiles ══ */
+function tile(i,still){var f=facts(i),b=el("button","tile"),ph=el("span","ph"),im=el("img");
+  b.type="button";b.setAttribute("data-i",i);im.loading="lazy";setArt(im,i,still);ph.appendChild(im);b.appendChild(ph);
+  b.appendChild(el("span","c","<span>"+p3(i)+" · "+f.ratio+"</span><span>"+f.anim+"</span>"));return b}
+(function(){var host=$("#motion-tiles");[19,28,17,36,4,18,32,161].forEach(function(i){host.appendChild(tile(i,false))})})();
+
+/* ══ build: the collection grid and its filters ══ */
+var gs={tier:"all",anim:"all",pal:"all",st:"all",shown:24},gridIds=[],FILTERS=[["#f-anim","anim"],["#f-pal","pal"],["#f-st","st"]];
+(function(){var cnt={t:[0,0,0,0],a:{},p:{}},i,f;
+  for(i=1;i<=N;i++){f=facts(i);cnt.t[f.t]++;cnt.a[f.anim]=(cnt.a[f.anim]||0)+1;cnt.p[f.pal]=(cnt.p[f.pal]||0)+1}
+  var chips=$("#f-tier");
+  [["all","All",N],["0","Origin",cnt.t[0]],["1","Plate",cnt.t[1]],["2","Descent",cnt.t[2]],["3","The Limit",cnt.t[3]]].forEach(function(c,k){
+    var b=el("button","chip",c[1]+" "+c[2]);b.type="button";b.setAttribute("data-v",c[0]);b.setAttribute("aria-pressed",k?"false":"true");chips.appendChild(b)});
+  chips.addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b)return;
+    $$(".chip",chips).forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false")});gs.tier=b.getAttribute("data-v");gs.shown=24;renderGrid()});
+  ANIMS.slice(1).concat(["none"]).forEach(function(a){var o=el("option",null,a+" ("+cnt.a[a]+")");o.value=a;$("#f-anim").appendChild(o)});
+  PALS.forEach(function(p){var o=el("option",null,p+" ("+cnt.p[p]+")");o.value=p;$("#f-pal").appendChild(o)});
+  FILTERS.forEach(function(s){$(s[0]).addEventListener("change",function(){gs[s[1]]=this.value;gs.shown=24;renderGrid()})});
+  /* more tiles: the focus moves to the first new one, where the reader goes on */
+  function grow(n){gs.shown=n;var t=$("#grid").children[renderGrid()];if(t)t.focus({preventScroll:true})}
+  $("#more").addEventListener("click",function(){grow(gs.shown+24)});
+  $("#all").addEventListener("click",function(){grow(N)});
+  /* a browser may put the selects back as the visitor left them; follow it */
+  window.addEventListener("pageshow",function(){var ch=false;
+    FILTERS.forEach(function(s){var v=$(s[0]).value;if(v&&gs[s[1]]!==v){gs[s[1]]=v;ch=true}});
+    if(ch){gs.shown=24;renderGrid()}})})();
+function gridList(){var out=[],i,f,s;
+  for(i=1;i<=N;i++){f=facts(i);
+    if(gs.tier!=="all"&&f.t!==+gs.tier)continue;
+    if(gs.anim!=="all"&&f.anim!==gs.anim)continue;
+    if(gs.pal!=="all"&&f.pal!==gs.pal)continue;
+    if(gs.st!=="all"){s=stateOf(i);if(gs.st==="done"?s!=="minted":s==="minted")continue}
+    out.push(i)}
+  return out}
+function tagTile(b){var s=stateOf(+b.getAttribute("data-i")),t=$(".tg",b);
+  if(s!=="minted"&&s!=="next"){if(t)t.remove();return}
+  if(!t){t=el("span","tg");b.appendChild(t)}
+  t.className="tg"+(s==="next"?" nx":"");t.textContent=s==="next"?"next":"minted"}
+/* tiles that are already right stay where they are, so a refresh never takes the focus away. Returns the index of the first new tile. */
+function renderGrid(){var host=$("#grid"),list=gridList(),n=Math.min(gs.shown,list.length),want=list.slice(0,n),same=0,k;
+  while(same<gridIds.length&&same<n&&gridIds[same]===want[same])same++;
+  while(host.children.length>same)host.removeChild(host.lastChild);
+  for(k=same;k<n;k++)host.appendChild(tile(want[k],true));
+  gridIds=want;
+  $$(".tile",host).forEach(tagTile);
+  $("#grid-count").textContent=list.length?"Showing "+n+" of "+list.length+(list.length<N?" that match":" pieces"):"Nothing matches those filters.";
+  $("#more").hidden=$("#all").hidden=n>=list.length;
+  if(n<list.length)$("#more").textContent="Show "+Math.min(24,list.length-n)+" more";
+  return same}
+
+/* ══ the viewer ══ */
+var dlg=$("#viewer"),cur=0,vOpen=false,flip=-1e9,clickAt=-1e9,clickTS=0,needPush=false,ht=0,tries=0;
+function viewerState(){var f=facts(cur),s=stateOf(cur),st=$("#v-state"),cta=$("#v-cta"),before=cur-mint.minted-1,nxt=mint.minted+1;
+  cta.className="btn ghost";cta.href=C.mint;cta.innerHTML="Open the mint on ACME&nbsp;↗";
+  if(s==="minted"){st.innerHTML="<b>Minted.</b> This piece exists as "+f.asset+" on ACME.";cta.className="btn";cta.href=C.asset+f.asset;cta.innerHTML="View "+f.asset+" on ACME&nbsp;↗"}
+  else if(s==="next"){st.innerHTML="<b>Next in line.</b> The next mint to confirm creates this piece as "+f.asset+".";cta.className="btn solid";cta.innerHTML="Mint on ACME&nbsp;↗"}
+  else if(s==="future"&&mint.open)st.innerHTML="<b>Not minted yet.</b> "+(before===1?"One mint comes":fmt(before)+" mints come")+" first. The mint always creates the next piece in line, which is "+p3(nxt)+" right now.";
+  else if(s==="future"){st.innerHTML=mint.closed?"<b>Not minted.</b> The mint closed after "+mint.minted+" of 161.":"<b>Not minted yet.</b> The mint is not open right now.";cta.innerHTML="See the mint on ACME&nbsp;↗"}
+  else st.innerHTML="On ACME this piece is the asset "+f.asset+". The mint page shows how many have been minted so far."}
+/* quiet: the address already names this piece (a link, Back or Forward), so history is left alone.
+   lazy: a key is held down and the pieces are flying past; the address catches up once it stops */
+function openPiece(i,quiet,lazy){i=clamp(i|0,1,N);cur=i;var f=facts(i),was=vOpen,h="#piece-"+p3(i);
+  setArt($("#v-img"),i);$(".v-art").className="v-art"+(f.portrait?" pt":"");
+  $("#v-asset").textContent=f.asset+" · "+p3(i)+" / 161";$("#v-title").textContent=name(f);
+  var rows=[["ratio",'<span class="gold">'+f.ratio+"</span>"],["continued fraction",f.cf],["squares",f.squares+(f.isPhi?" drawn · ∞ implied":"")],["tier",f.tier.toLowerCase()],
+    ["orientation",f.orient],["palette",f.pal],["animation",'<span class="gold">'+f.anim+"</span>"],["lenses",lensText(f)],["terminates",f.isPhi?'<span class="green">never</span>':"yes"]];
+  $("#v-facts tbody").innerHTML=rows.map(function(r){return "<tr><td>"+r[0]+"</td><td>"+r[1]+"</td></tr>"}).join("");
+  var a=i>1?i-1:N,b=i<N?i+1:1;$("#v-prev").textContent="← "+p3(a);$("#v-next").textContent=p3(b)+" →";
+  $("#v-prev").setAttribute("aria-label","Previous piece, "+p3(a));$("#v-next").setAttribute("aria-label","Next piece, "+p3(b));
+  viewerState();
+  if(!was){vOpen=true;mark();document.body.classList.add("modal");
+    if(dlg.showModal)dlg.showModal();else{dlg.setAttribute("open","");dlg.classList.add("plain");$("#v-close").focus()}}
+  $(".v-side").scrollTop=0;
+  /* opening adds one history entry, so Back closes the viewer; stepping through pieces rewrites that entry */
+  clearTimeout(ht);ht=0;tries=0;
+  if(!was){needPush=!quiet;
+    /* the entry underneath gives up any section name (#collection…): going back to an address that names a section,
+       Chrome scrolls to that section again and drops the keyboard focus */
+    if(needPush&&location.hash)try{history.replaceState(history.state,"",location.pathname+location.search)}catch(e){}}
+  if(lazy)ht=setTimeout(putHash,200);else putHash()}
+/* browsers ration how often a page may rewrite its address (Safari: 100 times in 30 s); if this one was refused, ask again later */
+function putHash(){var h="#piece-"+p3(cur);clearTimeout(ht);ht=0;if(!vOpen)return;
+  try{if(needPush)history.pushState({phi:1},"",h);else if(location.hash!==h)history.replaceState(history.state,"",h)}catch(e){}
+  if(needPush&&history.state&&history.state.phi)needPush=false;
+  if((needPush||location.hash!==h)&&tries++<12)ht=setTimeout(putHash,3000)}
+function strip(){clearTimeout(ht);ht=0;if(vOpen||!/^#(piece-|PHI\.)/i.test(location.hash))return;
+  try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}
+  if(/^#(piece-|PHI\.)/i.test(location.hash)&&tries++<12)ht=setTimeout(strip,3000)}
+/* the entry the viewer added leaves with it; a piece that came in by its address just loses the address */
+function shut(){if(!vOpen)return;
+  var mine=history.state&&history.state.phi;
+  if(ht&&mine&&!needPush)putHash();   /* a held key had left the address behind: it catches up before this entry is left, so Forward finds the piece that was showing */
+  vOpen=false;needPush=false;mark();clearTimeout(ht);ht=0;tries=0;document.body.classList.remove("modal");
+  if(mine)try{history.back()}catch(e){}else strip();
+  run()}   /* the tunnel, which rests while a piece is open over it, picks up again */
+/* the page settles its own state at once: a browser can hold the dialog's close event back until it next draws a frame */
+function closeViewer(){if(dlg.close&&dlg.open)dlg.close();else dlg.removeAttribute("open");shut()}
+function stepPiece(d,lazy){openPiece(d<0?(cur>1?cur-1:N):(cur<N?cur+1:1),false,lazy)}
+dlg.addEventListener("cancel",function(e){if(e.target===dlg)closeViewer()});   /* Esc, or Back on Android */
+dlg.addEventListener("close",function(){if(!dlg.open)shut()});                 /* any other way out */
+/* a double-click or a double-tap counts once: when a click of the mouse or a tap of the finger opens or closes the viewer, the next one within
+   four tenths of a second does nothing at all, whatever it lands on. Clicks made from the keyboard (detail 0) are never held back */
+function tick(){return window.performance&&performance.now?performance.now():Date.now()}
+document.addEventListener("click",function(e){if(!e.detail)return;
+  if(e.timeStamp-flip<400){e.preventDefault();e.stopPropagation()}else{clickAt=tick();clickTS=e.timeStamp}},true);
+function mark(){if(tick()-clickAt<80)flip=clickTS}   /* the change was made by that click: time the pause from the click itself */
+$("#v-close").addEventListener("click",closeViewer);
+/* a click outside closes it, but only one that both started and ended outside: selecting text must not */
+(function(){var out=false;
+  dlg.addEventListener("pointerdown",function(e){out=e.target===dlg});
+  dlg.addEventListener("pointerup",function(e){out=out&&e.target===dlg});
+  dlg.addEventListener("click",function(e){if(e.target===dlg&&out)closeViewer();out=false})})();
+$("#v-prev").addEventListener("click",function(){stepPiece(-1)});
+$("#v-next").addEventListener("click",function(){stepPiece(1)});
+dlg.addEventListener("keydown",function(e){if(e.altKey||e.ctrlKey||e.metaKey)return;
+  if(e.key==="ArrowLeft"){e.preventDefault();stepPiece(-1,e.repeat)}else if(e.key==="ArrowRight"){e.preventDefault();stepPiece(1,e.repeat)}});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&vOpen&&!dlg.showModal)closeViewer()});   /* browsers from before <dialog> */
+/* on touch screens a sideways swipe across the piece steps too */
+(function(){var art=$(".v-art"),x0=null,y0=0;
+  art.addEventListener("pointerdown",function(e){x0=e.pointerType==="mouse"?null:e.clientX;y0=e.clientY});
+  art.addEventListener("pointerup",function(e){if(x0===null)return;var dx=e.clientX-x0,dy=e.clientY-y0;x0=null;
+    if(Math.abs(dx)>48&&Math.abs(dx)>2*Math.abs(dy))stepPiece(dx<0?1:-1)});
+  art.addEventListener("pointercancel",function(){x0=null})})();
+/* Enter held down works a control once, however long it is held: without this the viewer would open and close many times a second */
+document.addEventListener("keydown",function(e){
+  if(e.key==="Enter"&&e.repeat&&e.target.closest&&e.target.closest("a,button,[role=button],form")){e.preventDefault();e.stopPropagation()}},true);
+/* anything that carries data-i opens that piece: ladder squares, tiles, frames */
+document.addEventListener("click",function(e){var t=e.target.closest&&e.target.closest("[data-i]");if(t&&!dlg.contains(t)){e.preventDefault();openPiece(+t.getAttribute("data-i"))}});
+/* links: PHI161.html#piece-043 and PHI161.html#PHI.042 both open piece 043 */
+function hashPiece(){var h=location.hash,m=h.match(/^#piece-(\d{1,3})$/i),a=h.match(/^#PHI\.(\d{3})$/i);
+  return m&&+m[1]>=1&&+m[1]<=N?+m[1]:a&&+a[1]<N?+a[1]+1:0}
+function fromHash(){var i=hashPiece();
+  if(i){if(!vOpen||cur!==i)openPiece(i,true)}
+  else if(vOpen)closeViewer()}   /* Back, out of the viewer */
+window.addEventListener("hashchange",fromHash);
+window.addEventListener("popstate",fromHash);
+
+/* ══ the finder: a piece number (1–161) or an asset name (PHI.000–PHI.160) ══ */
+(function(){var inp=$("#look"),msg=$("#look-msg"),idle=msg.textContent;
+  function say(t,err){msg.textContent=t;msg.className="mono "+(err?"err":"gr")}
+  $("#finder").addEventListener("submit",function(e){e.preventDefault();
+    var q=inp.value.trim(),a=q.match(/^(?:phi)?\s*\.\s*(\d{1,3})$/i),p=q.match(/^#?\s*(\d{1,3})$/);
+    if(!q){say(idle);openPiece(161);return}
+    if(a){if(+a[1]>N-1){say("Asset names run from PHI.000 to PHI.160.",1);return}say(idle);openPiece(+a[1]+1);return}
+    if(p){if(+p[1]<1||+p[1]>N){say("Pieces run from 001 to 161.",1);return}say(idle);openPiece(+p[1]);return}
+    say("Type a piece number, 1 to 161, or an asset name like PHI.042.",1)});
+  $("#rand").addEventListener("click",function(){say(idle);openPiece(Math.floor(Math.random()*N)+1)})})();
+
+/* ══ the mint, live. One GET to ACME, repeated each minute while the tab is in view. If it fails the page keeps its fixed text. ══ */
+var grace=0;
+/* where the browser does not hold the reader's place when something above them grows, do it by hand */
+var ANCHORS=!!(window.CSS&&CSS.supports&&CSS.supports("overflow-anchor","auto"));
+function keepPlace(fn){
+  if(ANCHORS||!window.scrollY){fn();return}
+  var e=document.elementFromPoint(window.innerWidth/2,Math.min(window.innerHeight-1,140)),t=e&&e.getBoundingClientRect().top;fn();
+  if(e&&document.documentElement.contains(e)){var d=e.getBoundingClientRect().top-t;if(Math.abs(d)>1)window.scrollBy({top:d,left:0,behavior:"instant"})}}
+function applyMint(){
+  var ok=mint.state==="ok",n=mint.minted,done=ok&&n>=N,nx=ok&&!done&&mint.open?n+1:0,off=ok&&!done&&!nx,over=done||(off&&mint.closed),
+      wait=mint.state==="wait"&&!!grace,f=facts(nx||N),price=fmt(mint.price)+" sats",how=mint.closed?"closed":"not open right now";
+  document.body.classList.toggle("over",over);
+  var nc=$("#nav-count");nc.hidden=!ok;if(ok){nc.innerHTML=p3(n)+" <i>/ 161 minted</i>";nc.setAttribute("aria-label",n+" of 161 minted")}
+  $("#cap-l").innerHTML=nx?"next  ·  <b>"+f.asset+'</b><span class="w">  ·  piece '+p3(nx)+"  ·  "+f.tier+"</span>"
+    :done?'<span class="w">all 161 minted  ·  </span>the cut is final'
+    :'[1;1,1,1,…]  ·  φ<span class="w">  ·  minted in order, 001 to 161</span>';
+  $("#cap-r").textContent=ok?p3(n)+" / 161 minted":"minting on ACME";
+  /* the band under the hero. While the first answer is on its way (a second at most) its picture and facts stay out of sight. */
+  var dot=$("#now-dot");
+  dot.className="dot"+(nx?" on":done||off?" end":"");
+  $(".now-grid").classList.toggle("pending",wait);
+  $("#now-k").textContent=nx?"Now minting on ACME":done?"Mint complete":off?"Mint "+(mint.closed?"closed":"not open"):mint.state==="wait"?"Checking the mint…":"Minting on ACME";
+  $("#now-h").textContent=nx?"Next in line: "+(f.isPhi?"The Limit":"piece "+p3(nx)):done?"All 161 are minted.":off?n+" of 161 minted.":"Minted in order, 001 to 161.";
+  $("#now-lede").innerHTML=nx?"The next mint to confirm creates <b>"+f.asset+"</b>. That is piece "+p3(nx)+" of 161: asset names count from zero."
+    :done?"The mint is closed. Every piece now has its own page on ACME."
+    :off?"The mint is "+how+". ACME shows its current state."
+    :"Every mint creates the next piece in the collection. The first was 1/1. The last will be φ.";
+  $("#now-kv").innerHTML=[["tier",f.tier.toLowerCase()],["ratio",f.ratio+DOT+f.cf],["squares",f.squares+(f.isPhi?" drawn · ∞ implied":"")],["motion",f.anim],["palette",f.pal],["lenses",lensText(f).toLowerCase()]]
+    .map(function(r){return "<dt>"+r[0]+"</dt><dd>"+r[1]+"</dd>"}).join("");
+  $(".price").hidden=done||off;$("#now-price").textContent=price;
+  $("#now-prog").classList.toggle("off",!ok);
+  if(ok){$("#now-bar").style.width=(n/N*100).toFixed(2)+"%";
+    $("#now-count").textContent=n+" of 161 minted"+(nx?DOT+(N-n)+" to go":"")+(mint.at?DOT+"checked "+mint.at:"")}
+  var cta=$("#now-cta");cta.href=done?C.asset+"PHI":C.mint;cta.innerHTML=done?"See PHI on ACME&nbsp;↗":off?"See the mint on ACME&nbsp;↗":"Mint on ACME&nbsp;↗";
+  $("#now-fine").hidden=done||off;
+  var fr=$("#now-frame");fr.setAttribute("data-i",f.i);fr.setAttribute("aria-label","Open "+name(f)+", up close");
+  fr.className="frame wide"+(f.portrait?" pt":"");
+  if(!wait&&$("#now-img").getAttribute("data-piece")!==String(f.i))setArt($("#now-img"),f.i);
+  /* every other way to the mint follows the same state */
+  var hc=$("#hero-cta"),nm=$("#nav-mint"),hn=$("#hero-next");hc.href=nm.href=cta.href;hc.innerHTML=done?"See it on ACME&nbsp;↗":cta.innerHTML;
+  nm.innerHTML=(done?'ACME<span class="sr">, the collection':off?'ACME<span class="sr">, the mint':'Mint<span class="sr"> on ACME')+', opens in a new tab</span> <span aria-hidden="true">↗</span>';
+  hn.textContent=done?"Browse all 161":"See what's next";hn.setAttribute("href",done?"#collection":"#now");
+  $("#foot-now").textContent=nx?"Next in line":"The mint";
+  $("#foot-mint").hidden=over;$("#mint-file").hidden=done;$("#nav-how").textContent=over?"The mint":"How to mint";
+  /* the ladder, the grid, the viewer */
+  $$("#ladder-map i").forEach(function(c){var i=+c.getAttribute("data-i"),s=stateOf(i);c.className=s==="minted"?"is-m":s==="next"?"is-x":"";
+    c.setAttribute("aria-label","Piece "+p3(i)+", "+facts(i).ratio+(s==="minted"?", minted":s==="next"?", next in line":s==="future"?", not minted yet":""))});
+  ladStop(nx||1);
+  $("#lad-lg").hidden=!ok;$(".lg-x").hidden=!nx;
+  $("#ladder-map").setAttribute("aria-label","The ladder: 161 pieces in mint order, grouped by ratio."+(ok?" "+n+" are minted.":"")+" Arrow keys move between the squares; Enter opens one.");
+  $("#f-st-l").hidden=!ok;if(!ok&&gs.st!=="all"){gs.st="all";$("#f-st").value="all"}
+  renderGrid();
+  if(vOpen)viewerState();
+  /* the mint section */
+  $("#mint-dot").className=dot.className;
+  $("#mint-k").textContent=done?"Mint · complete":off?"Mint · on ACME":"Mint · live on ACME";
+  $("#mint-line").textContent=nx?n+" of 161 minted"+DOT+"next is "+f.asset+", piece "+p3(nx)+DOT+price
+    :done?"All 161 are minted. The mint is closed."
+    :off?n+" of 161 minted"+DOT+"the mint is "+how
+    :"Minted in order, 001 to 161"+DOT+price+" each";
+  var mc=$("#mint-cta");mc.href=cta.href;mc.innerHTML=cta.innerHTML;
+}
+var polling=false,lastPoll=0,STALE=300000;
+function isInt(v,lo,hi){return typeof v==="number"&&isFinite(v)&&v===Math.floor(v)&&v>=lo&&v<=hi}
+function soldOut(){return mint.state==="ok"&&mint.minted>=N}
+function settle(){polling=false;if(grace){clearTimeout(grace);grace=0}keepPlace(applyMint)}
+function poll(){
+  if(!LIVE||!window.fetch){mint.state="off";settle();return}
+  if(polling)return;polling=true;lastPoll=Date.now();
+  var ctl=window.AbortController?new AbortController():null,t=setTimeout(function(){if(ctl)ctl.abort()},9000);
+  fetch(C.minters,{cache:"no-store",signal:ctl?ctl.signal:void 0}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){
+    /* the PHI mint among whatever ACME lists: open before closed before anything else, then the most recently touched */
+    var m=null,rank=function(x){return x.status==="open"?2:x.status==="closed"?1:0};
+    (j&&Array.isArray(j.result)?j.result:[]).forEach(function(x){
+      if(!x||x.asset!=="PHI"||x.generative!==true||x.hard_cap!==N||x.price_asset!=="BTC")return;
+      if(!m||rank(x)>rank(m)||(rank(x)===rank(m)&&(+x.block_index||0)>(+m.block_index||0)))m=x});
+    if(!m)throw 0;
+    var n=m.next_mint_number,q=m.earned_quantity,p=m.price,d=new Date();
+    /* a mint that is no longer open may stop reporting its next number; the count it earned still stands */
+    if(m.status!=="open"&&isInt(q,0,N)&&(!isInt(n,0,N)||q>n))n=q;
+    if(!isInt(n,0,N)||!isInt(p,1,2.1e15))throw 0;
+    mint={state:"ok",minted:n,price:p,open:m.status==="open"&&n<N,closed:m.status==="closed"||m.status==="cancelled",t:Date.now(),
+      at:("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)};
+  }).catch(function(){
+    /* the last good answer stands for five minutes; after that it is no longer presented as current */
+    if(mint.state!=="ok"||Date.now()-mint.t>STALE)mint.state="fail";
+  }).then(function(){clearTimeout(t);settle()});
+}
+setInterval(function(){if(!document.hidden&&!soldOut()&&Date.now()-lastPoll>=55000)poll()},60000);
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&!soldOut()&&Date.now()-lastPoll>30000)poll()});
+
+/* ══ check it against Bitcoin ══ */
+function hex2u8(h){var u=new Uint8Array(h.length>>1),i;for(i=0;i<u.length;i++)u[i]=parseInt(h.substr(i*2,2),16);return u}
+function u82hex(u){var s="",i;for(i=0;i<u.length;i++)s+=(u[i]<16?"0":"")+u[i].toString(16);return s}
+/* SHA-256 for pages served without https, where the browser's own is switched off */
+function sha256js(m){
+  var K=[],H=[],i,j,n=2,q;
+  for(i=0;i<64;n++){for(q=2;q*q<=n&&n%q;q++);if(q*q>n){if(i<8)H[i]=(Math.pow(n,.5)%1*4294967296)|0;K[i++]=(Math.pow(n,1/3)%1*4294967296)|0}}
+  var l=m.length,w=new Uint8Array(((l+72)>>6)<<6),v=new DataView(w.buffer),x=new Int32Array(64);
+  w.set(m);w[l]=128;v.setUint32(w.length-8,Math.floor(l/536870912));v.setUint32(w.length-4,(l<<3)>>>0);
+  for(i=0;i<w.length;i+=64){
+    var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7],t1,t2,s0,s1;
+    for(j=0;j<64;j++){
+      if(j<16)x[j]=v.getInt32(i+j*4);
+      else{s0=x[j-15];s1=x[j-2];x[j]=(x[j-16]+((s0>>>7|s0<<25)^(s0>>>18|s0<<14)^(s0>>>3))+x[j-7]+((s1>>>17|s1<<15)^(s1>>>19|s1<<13)^(s1>>>10)))|0}
+      t1=(h+((e>>>6|e<<26)^(e>>>11|e<<21)^(e>>>25|e<<7))+((e&f)^(~e&g))+K[j]+x[j])|0;
+      t2=(((a>>>2|a<<30)^(a>>>13|a<<19)^(a>>>22|a<<10))+((a&b)^(a&c)^(b&c)))|0;
+      h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0}
+    H[0]=(H[0]+a)|0;H[1]=(H[1]+b)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0}
+  var o="";for(i=0;i<8;i++)o+=("0000000"+(H[i]>>>0).toString(16)).slice(-8);return o}
+function sha256(u){return window.crypto&&crypto.subtle?crypto.subtle.digest("SHA-256",u).then(function(b){return u82hex(new Uint8Array(b))}):Promise.resolve(sha256js(u))}
+/* lift the file out of the tapscript: … OP_IF "acme" <tag> <value> … <00> <chunk> … OP_ENDIF */
+function fromWitness(hex){var b=hex2u8(hex),p=0,ops=[],op,len,i,k=-1;
+  while(p<b.length){op=b[p++];len=-1;
+    if(op>=1&&op<=75)len=op;else if(op===76){len=b[p];p+=1}else if(op===77){len=b[p]|b[p+1]<<8;p+=2}else if(op===78){len=(b[p]|b[p+1]<<8|b[p+2]<<16|b[p+3]<<24)>>>0;p+=4}
+    if(len<0)ops.push(op);else{if(p+len>b.length)throw new Error("the script is cut short");ops.push(b.subarray(p,p+len));p+=len}}
+  for(i=0;i<ops.length-1;i++)if(ops[i]===99&&ops[i+1].length===4&&String.fromCharCode.apply(null,ops[i+1])==="acme"){k=i+2;break}
+  if(k<0)throw new Error("no ACME envelope in that witness");
+  while(k<ops.length&&typeof ops[k]!=="number"&&ops[k].length===1&&ops[k][0]!==0)k+=2;
+  if(k>=ops.length||!(ops[k]===0||(typeof ops[k]!=="number"&&ops[k].length===1&&ops[k][0]===0)))throw new Error("no file in that envelope");   /* the body tag: a pushed zero byte, or OP_0 */
+  var parts=[],tot=0;
+  for(k++;k<ops.length&&typeof ops[k]!=="number";k++){parts.push(ops[k]);tot+=ops[k].length}
+  if(ops[k]!==104)throw new Error("the envelope is not closed");
+  var body=new Uint8Array(tot);p=0;parts.forEach(function(x){body.set(x,p);p+=x.length});return body}
+(function(){var btn=$("#ver"),out=$("#ver-out");
+  function line(ok,t){var li=el("li",ok===true?"ok":ok===false?"bad":"");li.textContent=(ok===true?"✓  ":ok===false?"✗  ":"·  ")+t;out.appendChild(li)}
+  function why(e){return e&&e.name==="AbortError"?"timed out":e&&e.message?e.message:"no answer"}
+  function get(u,kind){var ctl=window.AbortController?new AbortController():null,t=setTimeout(function(){if(ctl)ctl.abort()},20000);
+    return fetch(u,{cache:"no-store",signal:ctl?ctl.signal:void 0}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r[kind]()}).then(function(v){clearTimeout(t);return v},function(e){clearTimeout(t);throw e})}
+  btn.addEventListener("click",function(){
+    if(!window.fetch||!window.Promise){out.innerHTML="";line(false,"This browser cannot run the check. Use the links above instead.");return}
+    btn.disabled=true;btn.textContent="Checking…";out.innerHTML="";var file=null,got=false;
+    get(C.txapi+C.reveal,"json").then(function(tx){
+      var w=tx&&tx.vin&&tx.vin[0]&&tx.vin[0].witness;if(!w||w.length<2)throw new Error("that transaction carries no witness");
+      var body=fromWitness(w[w.length-2]),blk=tx.status&&tx.status.block_height;got=true;
+      return sha256(body).then(function(h){var ok=h===C.sha&&body.length===C.bytes;if(ok)file=body;
+        line(ok,"Bitcoin, as mempool.space reports it: "+fmt(body.length)+" bytes"+(isInt(blk,1,1e9)?" in block "+fmt(blk):"")+", SHA-256 "+h.slice(0,16)+"… "+(ok?"It matches.":"It does NOT match the hash on this page."))})
+    }).catch(function(e){line(false,"Bitcoin: could not check ("+why(e)+").")}).then(function(){
+      return get(C.content,"arrayBuffer").then(function(b){var u=new Uint8Array(b);got=true;
+        return sha256(u).then(function(h){var ok=h===C.sha;if(ok&&!file)file=u;
+          line(ok,"ACME: serving "+fmt(u.length)+" bytes. "+(ok?"The same file.":"NOT the same file (SHA-256 "+h.slice(0,16)+"…)."))})
+      }).catch(function(e){line(false,"ACME: could not check ("+why(e)+").")})
+    }).then(function(){
+      if(!file){line(null,got?"Engine: not compared, because no copy matched the hash.":"Engine: not compared, because the file could not be fetched.");return}
+      var t=new TextDecoder().decode(file).replace(/\r/g,""),a=t.indexOf("var PHI="),b=t.indexOf("var TAIL="),eng=a>=0&&b>a?t.slice(a,b).trim():"";
+      var pl=(t.match(/^var PLAN=.*$/m)||[""])[0],mine=($("#app").textContent.replace(/\r/g,"").match(/^var PLAN=.*$/m)||["?"])[0];
+      var ok=!!eng&&eng===$("#engine").textContent.replace(/\r/g,"").trim()&&pl===mine;
+      line(ok,ok?"Engine: the "+fmt(eng.length)+"-character engine and the 161-entry plan running this page are identical to the file's.":"Engine: this page's engine or plan differs from the file's.")
+    }).then(function(){btn.disabled=false;btn.textContent="Check again"})})})();
+
+/* ═══════════════ φ-TUNED SYNTHESIS ═══════════════
+   No audio files. A drone whose partials sit at golden-ratio multiples of the
+   fundamental. Because φ is the most irrational number, those partials never
+   fall into a common period — the chord literally cannot repeat itself. The
+   beat frequencies drift forever, which is the collection's thesis in sound. */
+var AC=null,analyser=null,freqData=null,master=null,voices=[],tickGen=0,barTimer=0;
+function startAudio(){
+  var Ctor=window.AudioContext||window.webkitAudioContext;if(!Ctor)return false;
+  AC=new Ctor();
+  master=AC.createGain();master.gain.value=0;
+  var comp=AC.createDynamicsCompressor();
+  analyser=AC.createAnalyser();analyser.fftSize=2048;analyser.smoothingTimeConstant=.78;
+  freqData=new Uint8Array(analyser.frequencyBinCount);
+  master.connect(comp);comp.connect(analyser);analyser.connect(AC.destination);
+  var base=55,n; // A1
+  // partials at phi^n — an inharmonic series that never closes
+  for(n=0;n<7;n++){
+    var o=AC.createOscillator();o.type=n<2?"sine":(n<5?"triangle":"sine");
+    o.frequency.value=base*Math.pow(PHI,n);
+    var g=AC.createGain();
+    // slow independent amplitude LFO — period in Fibonacci seconds, so they never align
+    var lfo=AC.createOscillator();lfo.frequency.value=1/[13,21,34,55,89,144,233][n];
+    var lg=AC.createGain();lg.gain.value=.5/(1+n*.85);
+    lfo.connect(lg);lg.connect(g.gain);
+    g.gain.value=.5/(1+n*.85);
+    var flt=AC.createBiquadFilter();flt.type="lowpass";flt.frequency.value=1400;flt.Q.value=.6;
+    o.connect(flt);flt.connect(g);g.connect(master);
+    o.start();lfo.start();voices.push({o:o,lfo:lfo});
+  }
+  // soft ticks at Fibonacci intervals — the ladder, audible. One chain per start; a stale chain stops itself.
+  var fib=[1,2,3,5,8,13,21,34],fi=0,gen=++tickGen,ac=AC,out=master;
+  function tick(){
+    if(gen!==tickGen)return;
+    var t=ac.currentTime,o=ac.createOscillator(),g=ac.createGain();
+    o.type="sine";o.frequency.value=base*Math.pow(PHI,3+(fi%4));
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.09,t+.006);
+    g.gain.exponentialRampToValueAtTime(.0001,t+.7);
+    o.connect(g);g.connect(out);o.start(t);o.stop(t+.8);
+    fi++;setTimeout(tick,fib[fi%fib.length]*620);
+  }
+  setTimeout(tick,900);
+  master.gain.linearRampToValueAtTime(.22,AC.currentTime+2.5);
+  return true;
+}
+function stopAudio(){var ac=AC,m=master,vs=voices;tickGen++;AC=null;analyser=null;master=null;voices=[];
+  if(!ac)return;
+  try{m.gain.cancelScheduledValues(ac.currentTime);m.gain.setValueAtTime(m.gain.value,ac.currentTime);m.gain.linearRampToValueAtTime(0,ac.currentTime+.6)}catch(e){}
+  setTimeout(function(){vs.forEach(function(v){try{v.o.stop();v.lfo.stop()}catch(e){}});try{ac.close()}catch(e){}},800)}
+function setSound(on){var b=$("#snd"),bars=$$("#snd .bars i");
+  if(on&&!AC&&!startAudio())on=false;
+  if(!on)stopAudio();
+  b.setAttribute("aria-pressed",on?"true":"false");$("#snd-s").textContent=on?"on":"off";
+  clearInterval(barTimer);bars.forEach(function(x){x.style.height="3px"});
+  if(on)barTimer=setInterval(function(){if(!analyser)return;analyser.getByteFrequencyData(freqData);
+    bars.forEach(function(x,k){x.style.height=(3+(freqData[10+k*26]/255)*10).toFixed(1)+"px"})},90)}
+$("#snd").addEventListener("click",function(){setSound(!AC)});
+$("#mot").addEventListener("click",function(){setMotion(!MOTION)});
+
+/* ═══════════════ HERO — a tunnel built from the collection itself ═══════════════
+   Every rectangle flying past is a real PHI 161 piece, drawn by the same engine this
+   page uses everywhere else and rasterised once, without its motion, to a small bitmap.
+   They sit on a helix around the tunnel axis, each one advanced from the last by the
+   golden angle 137.5077° — the same divergence that packs sunflower seeds. All 161 take
+   their turn. Pieces fade as they cross the middle of the screen, so the words on top
+   stay readable. */
+var hero=$("#hero"),cv=$("#tunnel"),ctx=cv.getContext?cv.getContext("2d"):null;
+var W=0,H=0,CY=0,EW=1,EH=1,DPR=1,KS=1,TH=0,GA=Math.PI*(3-Math.sqrt(5));
+var FOV=640,NEAR=90,FAR=2600,SPEED=150,NS=96,PH=200,MAXA=.92;
+var SL=[],head=1,tail=1,spin=0,px=0,py=0,glow=0,ptr={x:0,y:0},over=false,held=false,last=0,raf=0,heroSeen=true;
+var RAS={},rq=[],rbusy=0,POOL=[],slow=0,LOD=0,loaded=document.readyState==="complete";
+/* a bitmap that leaves the tunnel is handed to the next piece instead of being left for the collector */
+function drop(i){var r=RAS[i];if(r&&r.c){if(POOL.length<32)POOL.push(r.c);else r.c.width=0}delete RAS[i]}
+function inc(x){return x%N+1}
+function dec(x){return (x+N-2)%N+1}
+function want(i){if(!RAS[i]){RAS[i]={c:null,a:facts(i).portrait?.7:1/.7};rq.push(i);pump()}}
+function pump(){if(!loaded)return;while(rbusy<3&&rq.length){var i=rq.shift(),rec=RAS[i];if(!rec||rec.c)continue;rbusy++;load(i,rec)}}
+function load(i,rec){var im=new Image();
+  im.onload=function(){
+    if(RAS[i]===rec){var c=POOL.pop()||document.createElement("canvas");c.height=TH;c.width=Math.max(1,Math.round(TH*rec.a));
+      try{c.getContext("2d").drawImage(im,0,0,c.width,c.height);rec.c=c}catch(e){}}
+    rbusy--;pump();if(!raf)paint()};
+  im.onerror=function(){rbusy--;pump()};
+  im.src=src(i,true)}
+function slots(){SL=[];for(var k=0;k<NS;k++){SL.push({k:k,i:k+1,a:k*GA,z:NEAR+(k+.5)/NS*(FAR-NEAR),s:.82+.42*(((k*7)%5)/4),tilt:(((k*13)%7)/7-.5)*.2});want(k+1)}tail=1;head=NS+1}
+function resize(){var w=hero.clientWidth,h=hero.clientHeight;if(!w||!h)return;
+  DPR=LOD?1:Math.min(2,window.devicePixelRatio||1);W=w;H=h;
+  cv.width=Math.max(1,Math.round(W*DPR));cv.height=Math.max(1,Math.round(H*DPR));
+  /* measure the block of words; the tunnel's eye sits behind it and pieces dim as they cross it */
+  var hr=hero.getBoundingClientRect(),top=1e9,bot=0,hw=0;
+  $$("#hero .inner > *").forEach(function(k){var r=k.getBoundingClientRect();if(!r.width)return;top=Math.min(top,r.top-hr.top);bot=Math.max(bot,r.bottom-hr.top);hw=Math.max(hw,r.width/2)});
+  if(bot<=top){top=H*.3;bot=H*.7;hw=W*.3}
+  CY=(top+bot)/2;EW=hw*1.18+24;EH=(bot-top)/2*1.2+24;
+  hero.style.setProperty("--cy",CY.toFixed(0)+"px");hero.style.setProperty("--vw",(EW*1.7).toFixed(0)+"px");hero.style.setProperty("--vh",(EH*1.7).toFixed(0)+"px");
+  KS=clamp(Math.min(W,H)/900,.55,1.5);
+  var th=clamp(Math.ceil(PH*1.24*.877*KS*Math.min(DPR,1.5)),96,300);
+  if(!TH||th>TH*1.35||th<TH/2){TH=th;Object.keys(RAS).forEach(drop);rq=[];SL.forEach(function(s){want(s.i)})}
+  ptr.x=W/2;ptr.y=CY;if(!raf)paint()}
+function smooth(e0,e1,x){x=(x-e0)/(e1-e0);x=x<0?0:x>1?1:x;return x*x*(3-2*x)}
+function levels(){var b=0,a=0,q;
+  if(analyser){analyser.getByteFrequencyData(freqData);for(q=2;q<14;q++)b+=freqData[q];b/=12*255;for(q=90;q<150;q++)a+=freqData[q];a/=60*255}
+  return [b,a]}
+function step(dt,bass){
+  /* steering: ease toward the cursor, ease back to centre when it leaves */
+  var tx=over?(W/2-ptr.x)*.3:0,ty=over?(CY-ptr.y)*.3:0,sp=SPEED*(1+bass*.9)*(held?1:-1)*dt,n,s;
+  px+=(tx-px)*.055;py+=(ty-py)*.055;glow+=((held?1:0)-glow)*.08;
+  for(n=0;n<SL.length;n++){s=SL[n];s.z+=sp;
+    if(s.z<NEAR){s.z+=FAR-NEAR;drop(s.i);s.i=head;head=inc(head);tail=inc(tail);want(s.i)}
+    else if(s.z>FAR){s.z-=FAR-NEAR;drop(s.i);tail=dec(tail);head=dec(head);s.i=tail;want(s.i)}}
+  spin+=(held?-1:1)*.00055*(1+bass*1.4)*(dt/.016)}
+function paint(lv){lv=lv||levels();var bass=lv[0],air=lv[1],n,s;
+  if(!W||!ctx)return;
+  ctx.setTransform(DPR,0,0,DPR,0,0);ctx.globalAlpha=1;ctx.fillStyle="#050608";ctx.fillRect(0,0,W,H);
+  SL.sort(function(a,b){return b.z-a.z});
+  var RX=W*.66*(1+bass*.22),RY=H*.62*(1+bass*.22);
+  for(n=0;n<SL.length;n++){s=SL[n];
+    var sc=FOV/(FOV+s.z),an=s.a+spin,ox=px*(1-sc)*2.2,oy=py*(1-sc)*2.2;
+    var x=W/2+ox+Math.cos(an)*RX*sc,y=CY+oy+Math.sin(an)*RY*sc;
+    /* depth fade at both ends */
+    var a=smooth(FAR,FAR*.72,s.z)*smooth(NEAR,NEAR*2.4,s.z);
+    /* centre dim — an ellipse fitted to the block of words */
+    var dx=(x-W/2)/EW,dy=(y-CY)/EH,d=Math.sqrt(dx*dx+dy*dy);
+    a*=.13+.87*smooth(.85,1.25,d);a*=MAXA*(.8+.2*air);
+    if(a<=.012||(LOD>1&&(s.k&1)))continue;
+    var rec=RAS[s.i],ph=PH*s.s*sc*KS,pw;
+    if(!rec){want(s.i);rec=RAS[s.i]}
+    pw=ph*rec.a;
+    ctx.save();ctx.translate(x,y);ctx.rotate(s.tilt*(1-sc));
+    if(rec.c){ctx.globalAlpha=a;ctx.drawImage(rec.c,-pw/2,-ph/2,pw,ph);ctx.globalAlpha=a*.5}
+    else ctx.globalAlpha=a*.7;                       /* wireframe until its bitmap lands */
+    ctx.lineWidth=Math.max(.6,2.2*sc);ctx.strokeStyle="#67A6D4";ctx.strokeRect(-pw/2,-ph/2,pw,ph);
+    ctx.restore()}
+  /* hold: warm the tunnel */
+  if(glow>.004){var g=ctx.createRadialGradient(W/2,CY,0,W/2,CY,Math.max(W,H)*.62);
+    g.addColorStop(0,"rgba(103,166,212,"+(.16*glow).toFixed(3)+")");g.addColorStop(1,"rgba(103,166,212,0)");
+    ctx.globalAlpha=1;ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}}
+function frame(ts){raf=0;var gap=last?ts-last:16,dt=Math.min(.05,gap/1000),lv=levels();last=ts;
+  /* a device that cannot keep up (frames slower than 20 a second for a couple of seconds) gets a lighter tunnel:
+     first fewer pixels, then half the pieces. One stall counts for a quarter of a second at most: a pause is not a slow machine */
+  if(ts>3000){slow=gap>50?slow+Math.min(gap,250):Math.max(0,slow-gap);if(slow>2500&&LOD<2){LOD++;slow=0;resize()}}
+  step(dt,lv[0]);paint(lv);run()}
+/* runs only with motion on, the hero in view, no piece open over it and the tab in front */
+function run(){if(!raf&&ctx&&MOTION&&heroSeen&&!vOpen&&!document.hidden)raf=requestAnimationFrame(frame);if(!raf)last=0}
+/* controls live on #hero, not the canvas: the veil and the copy sit on top of the canvas */
+function at(e){var r=hero.getBoundingClientRect();ptr.x=e.clientX-r.left;ptr.y=e.clientY-r.top;over=true}
+hero.addEventListener("pointermove",at);
+hero.addEventListener("pointerdown",function(e){if(e.button||e.target.closest("a,button"))return;held=true;at(e)});
+hero.addEventListener("pointerleave",function(){over=false;held=false});
+["pointerup","pointercancel","blur"].forEach(function(t){window.addEventListener(t,function(){held=false})});
+window.addEventListener("resize",resize);
+if(window.IntersectionObserver)new IntersectionObserver(function(en){heroSeen=en[en.length-1].isIntersecting;run()}).observe(hero);
+/* time spent in a background tab is not a slow frame either */
+document.addEventListener("visibilitychange",function(){if(document.hidden&&AC)setSound(false);last=0;run()});
+
+/* ══ the menu on small screens ══ */
+(function(){var b=$("#menu-b"),ul=$("#nav-links"),y0=0;
+  function isOpen(){return ul.classList.contains("open")}
+  function set(o){ul.classList.toggle("open",o);b.setAttribute("aria-expanded",o?"true":"false");
+    if(o){y0=window.scrollY;var a=$("a",ul);if(a)a.focus()}}     /* the links come before the button in the page, so send the focus into them */
+  b.addEventListener("click",function(){set(!isOpen())});
+  ul.addEventListener("click",function(e){if(e.target.closest("a"))set(false)});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&isOpen()){set(false);b.focus()}});
+  document.addEventListener("pointerdown",function(e){if(isOpen()&&!e.target.closest("nav"))set(false)});
+  window.addEventListener("scroll",function(){if(isOpen()&&Math.abs(window.scrollY-y0)>60)set(false)},{passive:true})})();
+
+/* ══ go. The page comes first; the tunnel is an extra and is allowed to fail. ══ */
+setMotion(MOTION);
+grace=setTimeout(function(){grace=0;if(mint.state==="wait")keepPlace(applyMint)},1200);
+applyMint();
+fromHash();
+poll();
+try{resize();slots();run();if(!raf)paint()}catch(e){}
+/* its pictures are made once the page itself has finished loading */
+if(!loaded)window.addEventListener("load",function(){loaded=true;pump()});
+})();
+</script>
+</body></html>

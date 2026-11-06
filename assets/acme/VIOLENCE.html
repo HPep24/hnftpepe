@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Layered Media Viewer</title><style>body{margin:0;padding:0;background:#000;height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden;font-family:Arial,Helvetica,sans-serif;color:#fff}.container{position:relative;width:626px;height:877px;background:#111;overflow:hidden}.instruction{position:absolute;top:12px;left:0;right:0;text-align:center;font-size:15px;line-height:1.4;z-index:30;pointer-events:none;text-shadow:0 0 6px rgba(0,0,0,.9);padding:0 20px;box-sizing:border-box}.layer{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;pointer-events:none}#gif-layer{z-index:10}#image-layer{z-index:5}#video-layer{z-index:1}#click-area{position:absolute;width:40px;height:40px;border-radius:50%;left:calc(596px - 20px);top:calc(847px - 20px);z-index:20;cursor:pointer;background:rgba(255,255,255,.03);border:5px solid #b00020;box-shadow:0 0 12px 5px rgba(176,0,32,.65),0 0 22px 10px rgba(140,0,25,.45),inset 0 0 7px rgba(200,30,50,.5)}#click-area:hover{border-color:#d32f2f;box-shadow:0 0 16px 8px rgba(176,0,32,.9),0 0 30px 14px rgba(140,0,25,.7),inset 0 0 9px rgba(220,40,60,.7)}</style></head><body><div class="container"><img id="gif-layer" class="layer" src="https://mfejc2punonqz2ghaz5gmacnxuzxokgiz4m33g3vhibi77gomncq.arweave.net/YUiRafRrmwzoxwZ6ZgBNvTN3KMjPGb2bdToCj_zOY0U" alt="Animated overlay"> <img id="image-layer" class="layer" src="https://jiuwz25heoksjlq6f6lhqh4vtwi2tam5gjurfrm7yfqa3ipixd2q.arweave.net/Sils66cjlSSuHi-WeB-VnZGpgZ0yaRLFn8FgDaHouPU" alt="Background image"><video id="video-layer" class="layer" muted playsinline><source src="https://ob4rfhb3pm6rrmdbex55srgqka55hn2c4ouj2qr3qjc7p7nveicq.arweave.net/cHkSnDt7PRiwYSX72UTQUDvTt0LjqJ1CO4JF9_21IgU" type="video/mp4">Your browser does not support the video tag.</video><div id="click-area" onclick="playVideoOnce()"></div></div><script>const imageLayer = document.getElementById('image-layer');
+  const videoLayer  = document.getElementById('video-layer');
+
+  // Ensure initial state: image visible, video hidden + reset
+  imageLayer.style.display = 'block';
+  videoLayer.style.display = 'none';
+  videoLayer.muted = true;
+  videoLayer.currentTime = 0;
+  videoLayer.pause();
+
+  function playVideoOnce() {
+    // Show video, hide image
+    imageLayer.style.display = 'none';
+    videoLayer.style.display = 'block';
+
+    // Unmute and play from beginning
+    videoLayer.muted = false;
+    videoLayer.currentTime = 0;
+    videoLayer.play().catch(err => {
+      console.log("Play failed:", err);
+      // Optional: revert on failure
+      resetToImage();
+    });
+  }
+
+  // When video finishes → reset to image + mute + pause
+  videoLayer.addEventListener('ended', () => {
+    resetToImage();
+  });
+
+  function resetToImage() {
+    videoLayer.pause();
+    videoLayer.muted = true;
+    videoLayer.currentTime = 0;           // optional: rewind for next play
+    videoLayer.style.display = 'none';
+    imageLayer.style.display = 'block';
+  }</script></body></html>
